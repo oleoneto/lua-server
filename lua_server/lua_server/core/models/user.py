@@ -211,9 +211,8 @@ class User(AbstractUser):
     def save(self, *args, **kwargs):
         if not self.id:
             self.id = make_identifier()
-        if self.id:
-            Token.objects.get_or_create(user_id=self.id)
         super().save(*args, **kwargs)
+        Token.objects.get_or_create(user_id=self.id)
     
     def __str__(self):
         return self.username
