@@ -1,0 +1,48 @@
+# Django
+django>=2.1.5
+
+# Postgres SQL
+psycopg2
+
+# MongoDB
+djongo
+pymongo
+
+# Image Support
+Pillow
+
+# Cloud Storage
+cloudinary
+
+# REST API Support
+coreapi
+djangorestframework>=3.7.7
+djangorestframework-httpsignature
+djangorestframework_simplejwt
+django-oauth-plus
+django-oauth2-provider
+oauth2
+django-filter>=2.0.0
+djangorestframework-jsonapi>=2.6.0
+
+# Models
+django-polymorphic
+
+# Server
+django-livereload-server
+django-cors-headers
+
+# Seeding data
+Faker
+pycountry
+
+# Templating
+inflect
+
+# Markdown Support
+markdown
+
+##### end
+##########################
+##########################
+##########################
