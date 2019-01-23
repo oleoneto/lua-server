@@ -5,11 +5,18 @@ from .user import User
 from .course import Course
 
 
+STATUS = (
+    ('D', 'Draft'),
+    ('P', 'Published'),
+    ('R', 'For Review')
+)
+
+
 class Post(PolymorphicModel):
     id = models.BigIntegerField(primary_key=True, editable=False)
     author = models.ForeignKey(User, related_name='posts', on_delete=models.DO_NOTHING)
     content = models.TextField()
-    slug = models.SlugField(unique_for_month=True)
+    status = models.CharField(max_length=2, choices=STATUS, default='P')
     date_published = models.DateField()
     
     # Default fields. Omit with the --no-defaults flag
@@ -26,10 +33,12 @@ class Post(PolymorphicModel):
         super().save(*args, **kwargs)
     
     def __str__(self):
-        return self.created_at
+        return self.id
 
 
 class Lecture(Post):
+    title = models.CharField(max_length=256)
+    slug = models.SlugField(unique_for_month=True)
     course = models.ForeignKey(Course, related_name='lectures', on_delete=models.DO_NOTHING)
 
     class Meta:
