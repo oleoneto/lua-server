@@ -92,10 +92,10 @@ WSGI_APPLICATION = 'lua_server.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'LUA_DB',
-        'USER': 'csneto',
-        'HOST': 'localhost',
-        'PORT': '5432',
+        'NAME': secrets.DATABASE['name'],
+        'USER': secrets.DATABASE['user'],
+        'HOST': secrets.DATABASE['host'],
+        'PORT': secrets.DATABASE['port'],
     }
 }
 
