@@ -2,7 +2,6 @@ from django.db import models
 from polymorphic.models import PolymorphicModel
 from .helpers.identifier import make_identifier
 from .user import User
-from .course import Course
 
 
 STATUS = (
@@ -17,7 +16,6 @@ class Post(PolymorphicModel):
     author = models.ForeignKey(User, related_name='posts', on_delete=models.DO_NOTHING)
     content = models.TextField()
     status = models.CharField(max_length=2, choices=STATUS, default='P')
-    date_published = models.DateField()
     
     # Default fields. Omit with the --no-defaults flag
     created_at = models.DateTimeField(auto_now_add=True, editable=False)
@@ -31,15 +29,14 @@ class Post(PolymorphicModel):
         if not self.id:
             self.id = make_identifier()
         super().save(*args, **kwargs)
-    
+
     def __str__(self):
-        return self.id
+        return f"{self.content[:20]}..."
 
 
 class Lecture(Post):
     title = models.CharField(max_length=256)
-    slug = models.SlugField(unique_for_month=True)
-    course = models.ForeignKey(Course, related_name='lectures', on_delete=models.DO_NOTHING)
+    slug = models.SlugField(unique=True)
 
     class Meta:
         db_table = 'post_lectures'
@@ -53,8 +50,8 @@ class Comment(Post):
 
 
 class PostLikes(models.Model):
-    post = models.ForeignKey(Post, related_name='likes', on_delete=models.SET_NULL)
-    user = models.ForeignKey(User, related_name='likes', on_delete=models.SET_NULL)
+    post = models.ForeignKey(Post, related_name='likes', on_delete=models.CASCADE)
+    user = models.ForeignKey(User, related_name='likes', on_delete=models.CASCADE)
 
     class Meta:
         db_table = 'post_likes'

@@ -50,6 +50,13 @@ INSTALLED_APPS = [
     'rest_framework',
     'rest_framework.authtoken',
     'rest_framework_httpsignature',
+    'rest_framework_swagger',
+
+    # 2-Factor Authentication
+    'django_otp',
+    'django_otp.plugins.otp_static',
+    'django_otp.plugins.otp_totp',
+    'two_factor',
 
     'lua_server.core',
 ]
@@ -63,6 +70,12 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'corsheaders.middleware.CorsMiddleware',
+
+    # 2-Factor Authentication
+    'django_otp.middleware.OTPMiddleware',
+
+    # Twilio gateway
+    'two_factor.middleware.threadlocals.ThreadLocals',
 ]
 
 ROOT_URLCONF = 'lua_server.urls'
@@ -220,6 +233,41 @@ SIMPLE_JWT = {
     'SLIDING_TOKEN_REFRESH_LIFETIME': timedelta(days=1),
 }
 
+SWAGGER_SETTINGS = {
+    "LOGIN_URL": 'rest_framework:login',
+    "LOGOUT_URL": 'rest_framework:logout',
+    "APIS_SORTER": "alpha",
+    "DOC_EXPANSION": "list",
+    "USE_SESSION_AUTH": True,
+
+    "SHOW_REQUEST_HEADERS": True,
+
+    "JSON_EDITOR": True,
+    "OPERATIONS_SORTER": 'method',
+    "SECURITY_DEFINITIONS": {
+        "api_key": {
+            "type": "apiKey",
+            "name": "Token ",
+            "in": "header"
+        }
+    },
+}
+
+# 2-Factor Authentication
+LOGIN_URL = 'two_factor:login'
+# LOGOUT_URL = 'two_factor:logout'
+# LOGIN_REDIRECT_URL = 'two_factor:profile' # optional
+TWO_FACTOR_CALL_GATEWAY = 'two_factor.gateways.twilio.gateway.Twilio'
+TWO_FACTOR_SMS_GATEWAY = 'two_factor.gateways.twilio.gateway.Twilio'
+# TWO_FACTOR_QR_FACTORY = 'qrcode.image.pil.PilImage' # for PIL/Pillow
+# PHONENUMBER_DEFAULT_REGION = # Default: None
+OTP_TOTP_ISSUER = "Lua Learning Management System"
+
+TWILIO_ACCOUNT_SID = secrets.TWILIO['SID']
+TWILIO_AUTH_TOKEN = secrets.TWILIO['TOKEN']
+TWILIO_CALLER_ID = secrets.TWILIO['CALLER_ID']
+
+
 # Error Logging
 # A sample logging configuration. The only tangible logging
 # performed by this configuration is to send an email to
@@ -244,7 +292,11 @@ LOGGING = {
             'level': 'ERROR',
             'filters': ['require_debug_false'],
             'class': 'django.utils.log.AdminEmailHandler'
-        }
+        },
+        'console': {
+            'level': 'DEBUG',
+            'class': 'logging.StreamHandler',
+        },
     },
     'loggers': {
         'django.request': {
@@ -252,5 +304,9 @@ LOGGING = {
             'level': 'ERROR',
             'propagate': True,
         },
+        'two_factor': {
+            'handlers': ['console'],
+            'level': 'INFO',
+        }
     }
 }

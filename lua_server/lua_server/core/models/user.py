@@ -208,6 +208,9 @@ class User(AbstractUser):
         db_table = 'users'
         ordering = ['-created_at']
 
+    def name(self):
+        return f"{self.first_name} {self.last_name}"
+
     def save(self, *args, **kwargs):
         if not self.id:
             self.id = make_identifier()

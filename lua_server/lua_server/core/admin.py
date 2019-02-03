@@ -1,15 +1,95 @@
 from django.contrib import admin
+from django.contrib.contenttypes.models import ContentType
+from polymorphic.admin import PolymorphicParentModelAdmin, PolymorphicChildModelAdmin
+from django.contrib.auth.admin import UserAdmin as BaseUserAdmin
+from django.contrib.auth.admin import UserChangeForm, UserCreationForm, AdminPasswordChangeForm
+from .models.user import User
+from .models.post import Post, Lecture, Comment, PostLikes
 from django.contrib.admin.models import LogEntry, DELETION
 from django.utils.html import escape
 from django.urls import reverse
 
 
-# @admin.register(LogEntry)
+admin.site.site_header = "Lua Dashboard"
+admin.site.site_title = "Lua Dashboard"
+
+
+# Users
+@admin.register(User)
+class UserAdmin(BaseUserAdmin):
+    model = User
+    list_display = ['id', 'username', 'name', 'is_staff']
+    prepopulated_fields = {'username': ('first_name', 'last_name',)}
+    form = UserChangeForm
+    add_form = UserCreationForm
+    change_password_form = AdminPasswordChangeForm
+
+    fieldsets = (
+        (None, {
+            'classes': ('wide',),
+            'fields': ('first_name', 'last_name', 'username', 'email', 'password', 'profile_picture')
+        }),
+        ('Permissions', {'fields': ('is_staff',)}),
+    )
+
+    add_fieldsets = (
+        (None, {
+            'classes': ('wide',),
+            'fields': ('first_name', 'last_name', 'username', 'email', 'password1', 'password2', 'profile_picture'),
+        }),
+    )
+
+    search_fields = ('email', 'username', 'first_name', 'last_name')
+
+
+# Posts, Comments, and Likes
+class LikeAdminInline(admin.TabularInline):
+    model = PostLikes
+
+
+class PostAdmin(PolymorphicChildModelAdmin):
+    base_model = Post
+    list_display = ['id', 'author', 'content', 'created_at', 'updated_at', 'status']
+
+
+@admin.register(Lecture)
+class LectureAdmin(PostAdmin):
+    base_model = Lecture
+    show_in_index = True
+    prepopulated_fields = {'slug': ('title',)}
+    inlines = [LikeAdminInline]
+
+
+@admin.register(Comment)
+class CommentAdmin(PostAdmin):
+    base_model = Comment
+    show_in_index = True
+    inlines = [LikeAdminInline]
+
+
+@admin.register(Post)
+class PostParentAdmin(PolymorphicParentModelAdmin):
+    base_model = Post
+    child_models = (Comment, Lecture)
+
+    # Shows the concrete type of the object
+    def obj_type(self, obj):
+        return f"{ContentType.objects.get_for_id(obj.polymorphic_ctype_id)}".title()
+    obj_type.short_description = "Type"
+
+    def likes_count(self, obj):
+        return obj.likes.count()
+    likes_count.short_description = "Likes"
+
+    list_display = ['id', 'obj_type', 'author', 'content', 'created_at', 'updated_at', 'status', 'likes_count']
+
+
+@admin.register(LogEntry)
 class LogEntryAdmin(admin.ModelAdmin):
 
     date_hierarchy = 'action_time'
 
-    readonly_fields = LogEntry._meta.get_fields()
+    # readonly_fields = LogEntry._meta.get_fields()
 
     list_filter = [
         'user',
