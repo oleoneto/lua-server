@@ -4,7 +4,7 @@ from polymorphic.admin import PolymorphicParentModelAdmin, PolymorphicChildModel
 from django.contrib.auth.admin import UserAdmin as BaseUserAdmin
 from django.contrib.auth.admin import UserChangeForm, UserCreationForm, AdminPasswordChangeForm
 from .models.user import User
-from .models.post import Post, Lecture, Comment, PostLikes
+from .models.post import Post, Lecture, Comment, PostLike
 from django.contrib.admin.models import LogEntry, DELETION
 from django.utils.html import escape
 from django.urls import reverse
@@ -44,7 +44,7 @@ class UserAdmin(BaseUserAdmin):
 
 # Posts, Comments, and Likes
 class LikeAdminInline(admin.TabularInline):
-    model = PostLikes
+    model = PostLike
 
 
 class PostAdmin(PolymorphicChildModelAdmin):
