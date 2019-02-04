@@ -2,7 +2,7 @@
 django>=2.1.5
 
 # Postgres SQL
-psycopg2
+psycopg2-binary
 
 # MongoDB
 djongo
