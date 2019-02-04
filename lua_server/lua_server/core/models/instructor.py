@@ -7,10 +7,6 @@ class Instructor(User):
     bio = models.TextField(blank=True, max_length=500)
     specialty = models.CharField(blank=True, max_length=100)
     
-    # Default fields. Omit with the --no-defaults flag
-    created_at = models.DateTimeField(auto_now_add=True, editable=False)
-    updated_at = models.DateTimeField(auto_now=True, editable=False)
-
     class Meta:
         db_table = 'user_instructors'
         ordering = ['-created_at']

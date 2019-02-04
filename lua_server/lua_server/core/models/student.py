@@ -7,10 +7,6 @@ class Student(User):
     student_number = models.CharField(max_length=30)
     date_of_birth = models.DateField(blank=True)
     
-    # Default fields. Omit with the --no-defaults flag
-    created_at = models.DateTimeField(auto_now_add=True, editable=False)
-    updated_at = models.DateTimeField(auto_now=True, editable=False)
-
     class Meta:
         db_table = 'user_students'
         ordering = ['-created_at']
