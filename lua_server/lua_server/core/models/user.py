@@ -10,7 +10,7 @@ LANGUAGES = (
 
     ("pt", "Português"),
     ("fr", "Français"),
-    ('en', 'English'),
+    ("en", "English"),
     ("es", "Español"),
 
     ("ab", "Abkhazian"),
