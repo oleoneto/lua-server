@@ -15,6 +15,3 @@ class Student(User):
         if not self.id:
             self.id = make_identifier()
         super().save(*args, **kwargs)
-    
-    def __str__(self):
-        return self.created_at

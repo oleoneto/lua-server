@@ -1,13 +1,16 @@
 from django.contrib import admin
-from django.contrib.contenttypes.models import ContentType
-from polymorphic.admin import PolymorphicParentModelAdmin, PolymorphicChildModelAdmin
-from django.contrib.auth.admin import UserAdmin as BaseUserAdmin
-from django.contrib.auth.admin import UserChangeForm, UserCreationForm, AdminPasswordChangeForm
-from .models.user import User
-from .models.post import Post, Lecture, Comment, PostLike
 from django.contrib.admin.models import LogEntry, DELETION
 from django.utils.html import escape
 from django.urls import reverse
+from django.contrib.contenttypes.models import ContentType
+from polymorphic.admin import PolymorphicParentModelAdmin, PolymorphicChildModelAdmin
+from django.contrib.auth.admin import UserAdmin as BaseUserAdmin, UserChangeForm, UserCreationForm, AdminPasswordChangeForm
+from .models.user import User
+from .models.post import Post, Lecture, Comment, PostLike
+from .models.plan import Plan
+from .models.planner import Planner
+from .models.instructor import Instructor
+from .models.student import Student
 
 
 admin.site.site_header = "Lua Dashboard"
@@ -40,6 +43,20 @@ class UserAdmin(BaseUserAdmin):
     )
 
     search_fields = ('email', 'username', 'first_name', 'last_name')
+
+
+# Instructors and Students
+class PlanInline(admin.TabularInline):
+    model = Plan
+
+class PlannerInline(admin.TabularInline):
+    model = Planner
+
+
+@admin.register(Instructor)
+class InstructorAdmin(UserAdmin):
+    inlines = [PlannerInline, PlanInline]
+
 
 
 # Posts, Comments, and Likes
