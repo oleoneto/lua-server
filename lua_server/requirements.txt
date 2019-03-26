@@ -8,6 +8,7 @@ psycopg2-binary
 # MongoDB
 djongo
 pymongo
+django-redis
 
 # Image Support
 Pillow
@@ -43,9 +44,6 @@ django-cors-headers
 # Seeding data
 Faker
 pycountry
-
-# Templating
-inflect
 
 # Markdown Support
 markdown
