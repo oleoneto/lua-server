@@ -1,25 +1,42 @@
 from django.db import models
 from cloudinary.models import CloudinaryField
 from .helpers.identifier import make_identifier
-from .instructor import Instructor
+from .user import User
 
 
 class Planner(models.Model):
     id = models.BigIntegerField(primary_key=True, editable=False)
-    instructor = models.ForeignKey(Instructor, related_name='planners', on_delete=models.DO_NOTHING)
-    
-    # Default fields. Omit with the --no-defaults flag
+    user = models.ForeignKey(User, related_name='planners', on_delete=models.DO_NOTHING)
+
     created_at = models.DateTimeField(auto_now_add=True, editable=False)
     updated_at = models.DateTimeField(auto_now=True, editable=False)
 
     class Meta:
-        db_table = 'instructor_planners'
+        db_table = 'user_planners'
         ordering = ['-created_at']
-        
+
     def save(self, *args, **kwargs):
         if not self.id:
             self.id = make_identifier()
         super().save(*args, **kwargs)
-    
+
     def __str__(self):
-        return self.created_at
+        return self.id
+
+
+class PlannerEntry(models.Model):
+    planner = models.ForeignKey(Planner, related_name='entries', on_delete=models.DO_NOTHING)
+    title = models.CharField(max_length=256)
+    content = models.TextField()
+
+    class Meta:
+        db_table = 'user_planner_entries'
+        ordering = ['-created_at']
+
+    def save(self, *args, **kwargs):
+        if not self.id:
+            self.id = make_identifier()
+        super().save(*args, **kwargs)
+
+    def __str__(self):
+        return self.id

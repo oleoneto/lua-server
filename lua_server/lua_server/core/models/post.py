@@ -16,15 +16,14 @@ class Post(PolymorphicModel):
     author = models.ForeignKey(User, related_name='posts', on_delete=models.DO_NOTHING)
     content = models.TextField()
     status = models.CharField(max_length=2, choices=STATUS, default='P')
-    
-    # Default fields. Omit with the --no-defaults flag
+
     created_at = models.DateTimeField(auto_now_add=True, editable=False)
     updated_at = models.DateTimeField(auto_now=True, editable=False)
 
     class Meta:
         db_table = 'posts'
         ordering = ['-created_at']
-        
+
     def save(self, *args, **kwargs):
         if not self.id:
             self.id = make_identifier()
