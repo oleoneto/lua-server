@@ -8,13 +8,13 @@ from django.contrib.auth.admin import UserAdmin as BaseUserAdmin, UserChangeForm
 from .models.user import User
 from .models.post import Post, Lecture, Comment, PostLike
 from .models.plan import Plan
-from .models.planner import Planner
+from .models.planner import Planner, PlannerEntry
 from .models.instructor import Instructor
 from .models.student import Student
 
 
-admin.site.site_header = "Lua Dashboard"
-admin.site.site_title = "Lua Dashboard"
+admin.site.site_header = "Lua Learning"
+admin.site.site_title = "Lua Learning"
 
 
 # Users
@@ -52,11 +52,17 @@ class PlanInline(admin.TabularInline):
 class PlannerInline(admin.TabularInline):
     model = Planner
 
+class PlannerEntryInline(admin.TabularInline):
+    model = PlannerEntry
 
 @admin.register(Instructor)
 class InstructorAdmin(UserAdmin):
     inlines = [PlannerInline, PlanInline]
 
+
+@admin.register(Student)
+class StudentAdmin(admin.ModelAdmin):
+    inlines = [PlannerInline]
 
 
 # Posts, Comments, and Likes
