@@ -12,7 +12,7 @@ https://docs.djangoproject.com/en/2.1/ref/settings/
 
 import os
 from datetime import timedelta
-import lua_server.secrets as secrets
+from . import secrets
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -25,7 +25,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = secrets.SECRET_KEY
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = os.environ.get('DEBUG', False) == 'True'
+DEBUG = True # os.environ.get('DEBUG', False) == 'True'
 
 if DEBUG:
     ALLOWED_HOSTS = ['*']
@@ -46,6 +46,7 @@ INSTALLED_APPS = [
     'polymorphic',
     'cloudinary',
     'corsheaders',
+    'livereload',
 
     'rest_framework',
     'rest_framework.authtoken',
@@ -69,6 +70,11 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+
+    # Live reload
+    'livereload.middleware.LiveReloadScript',
+
+    # Cross-origin Resource Sharing
     'corsheaders.middleware.CorsMiddleware',
 
     # 2-Factor Authentication
@@ -83,7 +89,9 @@ ROOT_URLCONF = 'lua_server.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [os.path.join(BASE_DIR, 'lua_server/core/templates')],
+        'DIRS': [
+            os.path.join(BASE_DIR, 'lua_server/core/templates')
+        ],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -104,14 +112,24 @@ WSGI_APPLICATION = 'lua_server.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': secrets.DATABASE['postgres']['ENGINE'],
-        'NAME': secrets.DATABASE['postgres']['NAME'],
-        'USER': secrets.DATABASE['postgres']['USER'],
-        'HOST': secrets.DATABASE['postgres']['HOST'],
-        'PORT': secrets.DATABASE['postgres']['PORT'],
+        'ENGINE': secrets.DATABASES['postgres']['ENGINE'],
+        'NAME': secrets.DATABASES['postgres']['NAME'],
+        'USER': 'csneto', # secrets.DATABASES['postgres']['USER'],
+        'HOST': 'localhost', # secrets.DATABASES['postgres']['HOST'],
+        'PORT': secrets.DATABASES['postgres']['PORT'],
+        'PASSWORD': secrets.DATABASES['postgres']['PASSWORD'],
     }
 }
 
+CACHES = {
+    'default': {
+        'BACKEND': 'django_redis.cache.RedisCache',
+        'LOCATION': 'redis://127.0.0.1:6379/',
+        'OPTIONS': {
+            'CLIENT_CLASS': 'django_redis.client.DefaultClient',
+        }
+    }
+}
 
 # Password validation
 # https://docs.djangoproject.com/en/2.1/ref/settings/#auth-password-validators
@@ -152,7 +170,16 @@ USE_TZ = True
 
 MEDIA_URL = '/media/'
 STATIC_URL = '/static/'
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, 'static'),
+]
 
+if DEBUG:
+    STATIC_ROOT = 'staticfiles'
+    MEDIA_ROOT = 'mediafiles'
+else:
+    STATIC_ROOT = '/var/www/lualms/assets'
+    MEDIA_ROOT = '/var/www/lualms/mediafiles'
 
 # Cross-Origin Resource Sharing
 
@@ -161,9 +188,9 @@ CORS_ORIGIN_ALLOW_ALL = True
 # REST FRAMEWORK
 
 REST_FRAMEWORK = {
-    # 'PAGE_SIZE': 10,
+    'PAGE_SIZE': 10,
 
-    # 'DEFAULT_PAGINATION_CLASS': 'rest_framework_json_api.pagination.JsonApiPageNumberPagination',
+    'DEFAULT_PAGINATION_CLASS': 'rest_framework_json_api.pagination.JsonApiPageNumberPagination',
 
     'EXCEPTION_HANDLER': 'rest_framework_json_api.exceptions.exception_handler',
 
@@ -254,14 +281,14 @@ SWAGGER_SETTINGS = {
 }
 
 # 2-Factor Authentication
+OTP_TOTP_ISSUER = "Lua Learning Management System"
 LOGIN_URL = 'two_factor:login'
-# LOGOUT_URL = 'two_factor:logout'
-# LOGIN_REDIRECT_URL = 'two_factor:profile' # optional
 TWO_FACTOR_CALL_GATEWAY = 'two_factor.gateways.twilio.gateway.Twilio'
 TWO_FACTOR_SMS_GATEWAY = 'two_factor.gateways.twilio.gateway.Twilio'
+# LOGOUT_URL = 'two_factor:logout'
+# LOGIN_REDIRECT_URL = 'two_factor:profile' # optional
 # TWO_FACTOR_QR_FACTORY = 'qrcode.image.pil.PilImage' # for PIL/Pillow
 # PHONENUMBER_DEFAULT_REGION = # Default: None
-OTP_TOTP_ISSUER = "Lua Learning Management System"
 
 TWILIO_ACCOUNT_SID = secrets.TWILIO['SID']
 TWILIO_AUTH_TOKEN = secrets.TWILIO['TOKEN']
