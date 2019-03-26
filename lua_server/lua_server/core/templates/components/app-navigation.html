@@ -1,0 +1,154 @@
+{% load static from staticfiles %}
+
+{% comment %}
+    1. App navigation
+    2.
+    3.
+{% endcomment %}
+
+<div class="navbar-container bg-primary-3">
+      <nav class="navbar navbar-expand-lg navbar-dark bg-primary-3" data-sticky="top">
+        <div class="container">
+          <a class="navbar-brand fade-page" href="/">
+            <img src="static/assets/img/lua-white.svg" alt="Lua LMS">
+          </a>
+
+          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-expanded="false" aria-label="Toggle navigation">
+            <svg class="icon" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M3 17C3 17.5523 3.44772 18 4 18H20C20.5523 18 21 17.5523 21 17V17C21 16.4477 20.5523 16 20 16H4C3.44772 16 3 16.4477 3 17V17ZM3 12C3 12.5523 3.44772 13 4 13H20C20.5523 13 21 12.5523 21 12V12C21 11.4477 20.5523 11 20 11H4C3.44772 11 3 11.4477 3 12V12ZM4 6C3.44772 6 3 6.44772 3 7V7C3 7.55228 3.44772 8 4 8H20C20.5523 8 21 7.55228 21 7V7C21 6.44772 20.5523 6 20 6H4Z"
+              fill="#212529" />
+            </svg>
+          </button>
+
+          <div class="collapse navbar-collapse justify-content-end">
+            <div class="py-2 py-lg-0">
+              <ul class="navbar-nav">
+                <li class="nav-item">
+                  <a href="{% url 'about' %}" class="nav-link">About</a>
+                </li>
+                <li class="nav-item dropdown">
+                  <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown-grid" aria-expanded="false" aria-haspopup="true">Courses</a>
+                  <div class="dropdown-menu bg-primary-3 text-light border-bottom">
+                    <div class="container py-4" data-dropdown-content>
+                      <div class="row">
+                        <div class="col-lg col-md-4 mb-3 mb-lg-0">
+                          <h5>Base</h5>
+                          <div>
+                              <a class="dropdown-item fade-page" href="elements-grid.html">Grid</a>
+                              <a class="dropdown-item fade-page" href="elements-forms.html">Forms</a>
+                              <a class="dropdown-item fade-page" href="elements-tables.html">Tables</a>
+                              <a class="dropdown-item fade-page" href="elements-typography.html">Typography</a>
+                          </div>
+                        </div>
+                        <div class="col-lg col-md-4 mb-3 mb-lg-0">
+                          <h5>General</h5>
+                          <div>
+                              <a class="dropdown-item fade-page" href="elements-alerts.html">Alerts</a>
+                              <a class="dropdown-item fade-page" href="elements-avatars.html">Avatars</a>
+                              <a class="dropdown-item fade-page" href="elements-badges.html">Badges</a>
+                              <a class="dropdown-item fade-page" href="elements-breadcrumbs.html">Breadcrumbs</a>
+                              <a class="dropdown-item fade-page" href="elements-buttons.html">Buttons</a>
+                              <a class="dropdown-item fade-page" href="elements-cards.html">Cards</a>
+                              <a class="dropdown-item fade-page" href="elements-dropdowns-bootstrap.html">Dropdowns Bootstrap</a>
+                              <a class="dropdown-item fade-page" href="elements-dropdowns-grid.html">Dropdowns Grid</a>
+                              <a class="dropdown-item fade-page" href="elements-footers.html">Footers</a>
+                              <a class="dropdown-item fade-page" href="elements-navbars.html">Navigation</a>
+                              <a class="dropdown-item fade-page" href="elements-tooltips.html">Tooltips</a>
+                              <a class="dropdown-item fade-page" href="elements-widgets.html">Widgets</a>
+                          </div>
+                        </div>
+                        <div class="col-lg col-md-4 mb-3 mb-lg-0">
+                          <h5>Graphic</h5>
+                          <div>
+                              <a class="dropdown-item fade-page" href="elements-decorations.html">Decorations</a>
+                              <a class="dropdown-item fade-page" href="elements-dividers.html">Dividers</a>
+                              <a class="dropdown-item fade-page" href="elements-icons.html">Icons</a>
+                              <a class="dropdown-item fade-page" href="elements-icons-reference.html">Icons Reference</a>
+                              <a class="dropdown-item fade-page" href="elements-processes.html">Processes</a>
+                              <a class="dropdown-item fade-page" href="elements-progress.html">Progress</a>
+                              <a class="dropdown-item fade-page" href="elements-pricing.html">Pricing</a>
+                          </div>
+                        </div>
+                        <div class="col-lg col-md-4 mb-3 mb-lg-0">
+                          <h5>Media</h5>
+                          <div>
+                              <a class="dropdown-item fade-page" href="elements-fancybox.html">Fancybox</a>
+                              <a class="dropdown-item fade-page" href="elements-isotope.html">Isotope</a>
+                              <a class="dropdown-item fade-page" href="elements-maps.html">Maps</a>
+                              <a class="dropdown-item fade-page" href="elements-flickity.html">Slider Flickity</a>
+                              <a class="dropdown-item fade-page" href="elements-twitter.html">Twitter Feeds</a>
+                              <a class="dropdown-item fade-page" href="elements-video-players.html">Video Players</a>
+                              <a class="dropdown-item fade-page" href="elements-video-backgrounds.html">Video Backgrounds</a>
+                          </div>
+                        </div>
+                        <div class="col-lg col-md-4 mb-3 mb-lg-0">
+                          <h5>Interactive</h5>
+                          <div>
+                              <a class="dropdown-item fade-page" href="elements-animations.html">Animations</a>
+                              <a class="dropdown-item fade-page" href="elements-accordions.html">Accordion</a>
+                              <a class="dropdown-item fade-page" href="elements-counters.html">Counters</a>
+                              <a class="dropdown-item fade-page" href="elements-countdown.html">Countdown</a>
+                              <a class="dropdown-item fade-page" href="elements-modals.html">Modals</a>
+                              <a class="dropdown-item fade-page" href="elements-navs.html">Tabs (Nav)</a>
+                              <a class="dropdown-item fade-page" href="elements-typed-text.html">Typed Text</a>
+                              <a class="dropdown-item fade-page" href="elements-parallax.html">Parallax</a>
+                              <a class="dropdown-item fade-page" href="elements-popovers.html">Popovers</a>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'pricing' %}">Pricing</a>
+                </li>
+                <li class="nav-item dropdown">
+                  <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown-grid" aria-expanded="false" aria-haspopup="true">Support</a>
+                  <div class="dropdown-menu row">
+                    <div class="col-auto px-0" data-dropdown-content>
+                      <div class="bg-white rounded border shadow-lg o-hidden">
+                        <div class="p-3">
+                          <h6 class="mb-0">Product Support</h6>
+                        </div>
+                        <div class="list-group list-group-flush">
+                          <a href="{% url 'documentation' %}" class="list-group-item list-group-item-action d-flex align-items-center p-3">
+                            <svg class="icon icon-md" width="24px" height="24px" viewBox="0 0 24 24" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+                              <title>Icon For Selected-file</title>
+                              <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                                <polygon points="0 0 24 0 24 24 0 24" opacity="0"></polygon>
+                                <path d="M4.85714286,1 L11.7364114,1 C12.0910962,1 12.4343066,1.12568431 12.7051108,1.35473959 L17.4686994,5.3839416 C17.8056532,5.66894833 18,6.08787823 18,6.52920201 L18,19.0833333 C18,20.8738751 17.9795521,21 16.1428571,21 L4.85714286,21 C3.02044787,21 3,20.8738751 3,19.0833333 L3,2.91666667 C3,1.12612489 3.02044787,1 4.85714286,1 Z M8,12 C7.44771525,12 7,12.4477153 7,13 C7,13.5522847 7.44771525,14 8,14 L15,14 C15.5522847,14 16,13.5522847 16,13 C16,12.4477153 15.5522847,12 15,12 L8,12 Z M8,16 C7.44771525,16 7,16.4477153 7,17 C7,17.5522847 7.44771525,18 8,18 L11,18 C11.5522847,18 12,17.5522847 12,17 C12,16.4477153 11.5522847,16 11,16 L8,16 Z"
+                                fill="#000000" fill-rule="nonzero" opacity="0.3"></path>
+                                <path d="M6.85714286,3 L14.7364114,3 C15.0910962,3 15.4343066,3.12568431 15.7051108,3.35473959 L20.4686994,7.3839416 C20.8056532,7.66894833 21,8.08787823 21,8.52920201 L21,21.0833333 C21,22.8738751 20.9795521,23 19.1428571,23 L6.85714286,23 C5.02044787,23 5,22.8738751 5,21.0833333 L5,4.91666667 C5,3.12612489 5.02044787,3 6.85714286,3 Z M8,12 C7.44771525,12 7,12.4477153 7,13 C7,13.5522847 7.44771525,14 8,14 L15,14 C15.5522847,14 16,13.5522847 16,13 C16,12.4477153 15.5522847,12 15,12 L8,12 Z M8,16 C7.44771525,16 7,16.4477153 7,17 C7,17.5522847 7.44771525,18 8,18 L11,18 C11.5522847,18 12,17.5522847 12,17 C12,16.4477153 11.5522847,16 11,16 L8,16 Z"
+                                fill="#000000" fill-rule="nonzero"></path>
+                              </g>
+                            </svg>
+                            <div class="text-body ml-3">
+                              <span>Documentation</span>
+                              <div class="text-small text-muted">Get all the information you need</div>
+                            </div>
+                          </a>
+                          <a href="{% url 'faq' %}" class="list-group-item list-group-item-action d-flex align-items-center p-3">
+                            <svg class="icon icon-md" width="24px" height="24px" viewBox="0 0 24 24" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+                              <title>Icon For Chat#4</title>
+                              <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                                <rect opacity="0" x="0" y="0" width="24" height="24"></rect>
+                                <path d="M21.9999843,15.009808 L22.0249378,15 L22.0249378,19.5857864 C22.0249378,20.1380712 21.5772226,20.5857864 21.0249378,20.5857864 C20.7597213,20.5857864 20.5053674,20.4804296 20.317831,20.2928932 L18.0249378,18 L5,18 C3.34314575,18 2,16.6568542 2,15 L2,6 C2,4.34314575 3.34314575,3 5,3 L19,3 C20.6568542,3 22,4.34314575 22,6 L22,15 C22,15.0032706 21.9999948,15.0065399 21.9999843,15.009808 Z M6.16794971,10.5547002 C7.67758127,12.8191475 9.64566871,14 12,14 C14.3543313,14 16.3224187,12.8191475 17.8320503,10.5547002 C18.1384028,10.0951715 18.0142289,9.47430216 17.5547002,9.16794971 C17.0951715,8.86159725 16.4743022,8.98577112 16.1679497,9.4452998 C15.0109146,11.1808525 13.6456687,12 12,12 C10.3543313,12 8.9890854,11.1808525 7.83205029,9.4452998 C7.52569784,8.98577112 6.90482849,8.86159725 6.4452998,9.16794971 C5.98577112,9.47430216 5.86159725,10.0951715 6.16794971,10.5547002 Z"
+                                fill="#000000"></path>
+                              </g>
+                            </svg>
+                            <div class="text-body ml-3">
+                              <span>Looking for answers?</span>
+                              <div class="text-small text-muted">Get support</div>
+                            </div>
+                          </a>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </li>
+              </ul>
+            </div><a href="#" class="btn btn-primary ml-lg-3">Start Learning</a>
+          </div>
+        </div>
+      </nav>
+</div>
