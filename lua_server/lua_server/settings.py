@@ -217,6 +217,7 @@ CKEDITOR_CONFIGS = {
 
 CORS_ORIGIN_ALLOW_ALL = True
 
+
 # REST FRAMEWORK
 
 REST_FRAMEWORK = {
@@ -264,11 +265,11 @@ REST_FRAMEWORK = {
     'TEST_REQUEST_DEFAULT_FORMAT': 'vnd.api+json'
 }
 
-
 JSON_API_FORMAT_FIELD_NAMES = 'dasherize'
-JSON_API_FORMAT_TYPES = 'dasherize'
-JSON_API_PLURALIZE_TYPES = False
 
+JSON_API_FORMAT_TYPES = 'dasherize'
+
+JSON_API_PLURALIZE_TYPES = False
 
 SIMPLE_JWT = {
     'ACCESS_TOKEN_LIFETIME': timedelta(minutes=5),
@@ -312,18 +313,29 @@ SWAGGER_SETTINGS = {
     },
 }
 
+
 # 2-Factor Authentication
+
 OTP_TOTP_ISSUER = "Lua Learning Management System"
+
 LOGIN_URL = 'two_factor:login'
+
 TWO_FACTOR_CALL_GATEWAY = 'two_factor.gateways.twilio.gateway.Twilio'
+
 TWO_FACTOR_SMS_GATEWAY = 'two_factor.gateways.twilio.gateway.Twilio'
+
 # LOGOUT_URL = 'two_factor:logout'
+
 # LOGIN_REDIRECT_URL = 'two_factor:profile' # optional
+
 # TWO_FACTOR_QR_FACTORY = 'qrcode.image.pil.PilImage' # for PIL/Pillow
+
 # PHONENUMBER_DEFAULT_REGION = # Default: None
 
 TWILIO_ACCOUNT_SID = secrets.TWILIO['SID']
+
 TWILIO_AUTH_TOKEN = secrets.TWILIO['TOKEN']
+
 TWILIO_CALLER_ID = secrets.TWILIO['CALLER_ID']
 
 
