@@ -23,7 +23,11 @@ admin.site.__class__ = AdminSiteOTPRequired
 
 urlpatterns = [
     path('restricted/', admin.site.urls),
-    path('api/v1/', include('lua_server.core.urls')),
     path('', include(tf_urls)),
     path('', include(tf_twilio_urls)),
+
+    # ...
+    path('', include('lua_server.core.urls')),
+
+    path('ckeditor/', include('ckeditor_uploader.urls')),
 ]
