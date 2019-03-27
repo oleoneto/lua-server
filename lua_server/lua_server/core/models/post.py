@@ -1,4 +1,5 @@
 from django.db import models
+from ckeditor.fields import RichTextField
 from polymorphic.models import PolymorphicModel
 from .helpers.identifier import make_identifier
 from .user import User
@@ -14,7 +15,7 @@ STATUS = (
 class Post(PolymorphicModel):
     id = models.BigIntegerField(primary_key=True, editable=False)
     author = models.ForeignKey(User, related_name='posts', on_delete=models.DO_NOTHING)
-    content = models.TextField()
+    content = RichTextField()
     status = models.CharField(max_length=2, choices=STATUS, default='P')
 
     created_at = models.DateTimeField(auto_now_add=True, editable=False)
