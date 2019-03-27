@@ -47,6 +47,7 @@ INSTALLED_APPS = [
     'cloudinary',
     'corsheaders',
     'livereload',
+    'ckeditor',
 
     'rest_framework',
     'rest_framework.authtoken',
@@ -169,17 +170,48 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/2.1/howto/static-files/
 
 MEDIA_URL = '/media/'
+
 STATIC_URL = '/static/'
+
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'static'),
 ]
 
 if DEBUG:
     STATIC_ROOT = 'staticfiles'
+
     MEDIA_ROOT = 'mediafiles'
+
 else:
     STATIC_ROOT = '/var/www/lualms/assets'
+
     MEDIA_ROOT = '/var/www/lualms/mediafiles'
+
+
+# CKEditor configuration
+
+CKEDITOR_BASEPATH = STATIC_ROOT
+
+CKEDITOR_UPLOAD_PATH = MEDIA_ROOT
+
+CKEDITOR_RESTRICT_BY_USER = True
+
+CKEDITOR_RESTRICT_BY_DATE = True
+
+CKEDITOR_IMAGE_BACKEND = 'pillow'
+
+CKEDITOR_THUMNAIL_SIZE = (48, 48)
+
+CKEDITOR_FORCE_JPEG_COMPRESSION = True
+
+CKEDITOR_CONFIGS = {
+    'default': {
+        'toolbar': 'full',
+        'height': 300,
+        'width': 300,
+    },
+}
+
 
 # Cross-Origin Resource Sharing
 
