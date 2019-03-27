@@ -13,6 +13,9 @@ django-redis
 # Image Support
 Pillow
 
+#WYSIWYG Editor
+django-ckeditor
+
 # Cloud Storage
 cloudinary
 
