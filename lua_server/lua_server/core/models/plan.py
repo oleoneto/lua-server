@@ -16,7 +16,12 @@ STATUS = (
 
 class Plan(models.Model):
     id = models.BigIntegerField(primary_key=True, editable=False)
-    instructor = models.ForeignKey(Instructor, related_name='plans', on_delete=models.DO_NOTHING)
+
+    # Instructor responsible for the plan
+    creator = models.ForeignKey(Instructor, related_name='created_plans', on_delete=models.DO_NOTHING, editable=False)
+
+    # Instructor responsible for the plan
+    instructor = models.ForeignKey(Instructor, related_name='managed_plans', on_delete=models.DO_NOTHING)
 
     # Determine if plan must be followed by registed students
     is_required = models.BooleanField(default=True)
@@ -50,13 +55,13 @@ class Plan(models.Model):
         # Since using percentages, minimum_grade_required should be between 0 and 100
         if self.minimum_grade_required > 100 or self.minimum_grade_required < 0:
             raise ValidationError(
-            gt_('Please provide a percentage value between 0 and 100')
+            gl_('Please provide a percentage value between 0 and 100')
             )
 
         # Ensure there's content for the plan. Either raw content or an uploaded file.
         if not self.content and self.file:
             raise ValidationError(
-            gt_('Please provide either raw content or upload a file for this plan')
+            gl_('Please provide either raw content or upload a file for this plan')
             )
 
         super().save(*args, **kwargs)
