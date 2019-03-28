@@ -115,7 +115,7 @@ static
 staticfiles
 media
 mediafiles
-
+data.json
 
 # Docker
 .envs
