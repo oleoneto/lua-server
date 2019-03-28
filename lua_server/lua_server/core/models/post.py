@@ -17,6 +17,7 @@ class Post(PolymorphicModel):
     author = models.ForeignKey(User, related_name='posts', on_delete=models.DO_NOTHING)
     content = RichTextField()
     status = models.CharField(max_length=2, choices=STATUS, default='P')
+    is_private = models.BooleanField(default=False)
 
     created_at = models.DateTimeField(auto_now_add=True, editable=False)
     updated_at = models.DateTimeField(auto_now=True, editable=False)
