@@ -31,22 +31,30 @@ class Post(PolymorphicModel):
         super().save(*args, **kwargs)
 
     def __str__(self):
-        return f"{self.content[:20]}..."
+        return f"{self.id} - Post"
 
 
 class Lecture(Post):
     title = models.CharField(max_length=256)
-    slug = models.SlugField(unique=True)
+    slug = models.SlugField(unique=False, allow_unicode=True)
 
     class Meta:
         db_table = 'post_lectures'
 
+    def __str__(self):
+        return f"{self.title}"
+
 
 class Comment(Post):
+    # Due to naming conflicts, this field will be called post instead of lecture
+    post = models.ForeignKey(Lecture, related_name='comments', on_delete=models.CASCADE)
     is_inappropriate = models.BooleanField(default=False)
 
     class Meta:
         db_table = 'post_comments'
+
+    def __str__(self):
+        return f"{self.id} - Comment"
 
 
 class PostLike(models.Model):
