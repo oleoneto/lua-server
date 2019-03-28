@@ -183,7 +183,7 @@ if DEBUG:
     MEDIA_ROOT = 'mediafiles'
 
 else:
-    STATIC_ROOT = '/var/www/lualms/assets'
+    STATIC_ROOT = '/var/www/lualms/staticfiles'
 
     MEDIA_ROOT = '/var/www/lualms/mediafiles'
 
