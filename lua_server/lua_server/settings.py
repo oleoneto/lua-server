@@ -48,6 +48,7 @@ INSTALLED_APPS = [
     'corsheaders',
     'livereload',
     'ckeditor',
+    'debug_toolbar',
 
     'rest_framework',
     'rest_framework.authtoken',
@@ -72,6 +73,9 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 
+    # Live debugging
+    'debug_toolbar.middleware.DebugToolbarMiddleware',
+
     # Live reload
     'livereload.middleware.LiveReloadScript',
 
@@ -84,6 +88,9 @@ MIDDLEWARE = [
     # Twilio gateway
     'two_factor.middleware.threadlocals.ThreadLocals',
 ]
+
+# For debugging
+INTERNAL_IPS = '127.0.0.1'
 
 ROOT_URLCONF = 'lua_server.urls'
 

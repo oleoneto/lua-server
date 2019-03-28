@@ -43,6 +43,7 @@ django-polymorphic
 # Server
 django-livereload-server
 django-cors-headers
+django-debug-toolbar
 
 # Seeding data
 Faker

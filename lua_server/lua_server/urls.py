@@ -18,6 +18,7 @@ from django.urls import path, include
 from two_factor.urls import urlpatterns as tf_urls
 from two_factor.gateways.twilio.urls import urlpatterns as tf_twilio_urls
 from two_factor.admin import AdminSiteOTPRequired
+from django.conf import settings
 
 admin.site.__class__ = AdminSiteOTPRequired
 
@@ -31,3 +32,9 @@ urlpatterns = [
 
     path('ckeditor/', include('ckeditor_uploader.urls')),
 ]
+
+if settings.DEBUG:
+    import debug_toolbar
+    urlpatterns += [
+        path('__debug__/', include(debug_toolbar.urls)),
+    ]
