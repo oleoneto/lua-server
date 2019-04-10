@@ -1,5 +1,6 @@
 from django.contrib import admin
 from ..models.planner import Planner, PlannerEntry
+from .event import EventInline
 
 
 class PlannerInline(admin.StackedInline):
@@ -11,6 +12,9 @@ class PlannerEntryInline(admin.StackedInline):
     model = PlannerEntry
     extra = 1
 
+
 @admin.register(Planner)
 class PlannerAdmin(admin.ModelAdmin):
-    inlines = [PlannerEntryInline]
+    inlines = [PlannerEntryInline, EventInline]
+
+    list_display = ['id', 'user']
