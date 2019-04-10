@@ -1,7 +1,7 @@
 from django.db import models
 from django.core.exceptions import ValidationError
 from django.utils.translation import gettext_lazy as gl_
-from cloudinary.models import CloudinaryField
+from ckeditor.fields import RichTextField
 from .helpers.identifier import make_identifier
 from .instructor import Instructor
 
@@ -14,11 +14,11 @@ STATUS = (
 )
 
 
-class Plan(models.Model):
+class StudyPlan(models.Model):
     id = models.BigIntegerField(primary_key=True, editable=False)
 
     # Instructor responsible for the plan
-    creator = models.ForeignKey(Instructor, related_name='created_plans', on_delete=models.DO_NOTHING, editable=False)
+    creator = models.ForeignKey(Instructor, related_name='created_plans', on_delete=models.DO_NOTHING)
 
     # Instructor responsible for the plan
     instructor = models.ForeignKey(Instructor, related_name='managed_plans', on_delete=models.DO_NOTHING)
@@ -27,13 +27,16 @@ class Plan(models.Model):
     is_required = models.BooleanField(default=True)
 
     # This should be an integer representing percentages
-    minimum_grade_required = models.IntegerField(null=True)
+    minimum_grade_required = models.PositiveIntegerField(default=50)
+
+    # Short title capturing the essence of the plan
+    title = models.CharField(max_length=244)
 
     # A clear description of what this study plan is about
     description = models.TextField()
 
     # Add raw content here or upload a file as needed
-    content = models.TextField(blank=True)
+    content = RichTextField(blank=True)
 
     # Store study plans as files to be displayed on browser
     file = models.FileField(blank=True, upload_to='plans/%Y/%m/%d/', name='IEP')
@@ -53,9 +56,9 @@ class Plan(models.Model):
             self.id = make_identifier()
 
         # Since using percentages, minimum_grade_required should be between 0 and 100
-        if self.minimum_grade_required > 100 or self.minimum_grade_required < 0:
+        if self.minimum_grade_required > 100:
             raise ValidationError(
-            gl_('Please provide a percentage value between 0 and 100')
+            gl_('Please provide a positive percentage value between 1 and 100')
             )
 
         # Ensure there's content for the plan. Either raw content or an uploaded file.
@@ -70,4 +73,4 @@ class Plan(models.Model):
         return self.file.url()
 
     def __str__(self):
-        return self.created_at
+        return self.title

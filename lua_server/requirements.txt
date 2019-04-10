@@ -17,6 +17,7 @@ psycopg2-binary
 
 # Cloud
 cloudinary
+boto3
 django-storages
 
 
@@ -29,6 +30,7 @@ django-ckeditor
 
 
 # Authentication
+django-registration
 django-otp
 django-two-factor-auth
 twilio
