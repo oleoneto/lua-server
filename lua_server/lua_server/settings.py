@@ -43,23 +43,33 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 
-    'polymorphic',
+    # Cloud storage
+    'storages',
     'cloudinary',
-    'corsheaders',
-    'livereload',
-    'ckeditor',
-    'debug_toolbar',
 
+    # Polymorphic model types
+    'polymorphic',
+
+    # WYSIWYG Editor
+    'ckeditor',
+
+    # Django REST framework
     'rest_framework',
     'rest_framework.authtoken',
     'rest_framework_httpsignature',
     'rest_framework_swagger',
 
-    # 2-Factor Authentication
+    # Authentication
+    'django_registration',
     'django_otp',
     'django_otp.plugins.otp_static',
     'django_otp.plugins.otp_totp',
     'two_factor',
+
+    # Development/Debug
+    # 'corsheaders',
+    # 'livereload',
+    'debug_toolbar',
 
     'lua_server.core',
 ]
@@ -77,10 +87,10 @@ MIDDLEWARE = [
     'debug_toolbar.middleware.DebugToolbarMiddleware',
 
     # Live reload
-    'livereload.middleware.LiveReloadScript',
+    # 'livereload.middleware.LiveReloadScript',
 
     # Cross-origin Resource Sharing
-    'corsheaders.middleware.CorsMiddleware',
+    # 'corsheaders.middleware.CorsMiddleware',
 
     # 2-Factor Authentication
     'django_otp.middleware.OTPMiddleware',
@@ -176,23 +186,47 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/2.1/howto/static-files/
 
+# Moving static assets to DigitalOcean Spaces as per:
+# https://www.digitalocean.com/community/tutorials/how-to-set-up-object-storage-with-django
+
+AWS_ACCESS_KEY_ID = secrets.OBJECT_SPACE['access_key_id']
+AWS_SECRET_ACCESS_KEY = secrets.OBJECT_SPACE['secret_key']
+
+AWS_STORAGE_BUCKET_NAME = secrets.OBJECT_SPACE['bucket_name']
+
+AWS_S3_ENDPOINT_URL = secrets.OBJECT_SPACE['endpoint_url']
+AWS_S3_CUSTOM_DOMAIN = secrets.OBJECT_SPACE['edge_domain']
+
+AWS_LOCATION = secrets.OBJECT_SPACE['public_location']
+AWS_STATIC_LOCATION = secrets.OBJECT_SPACE['public_static_location']
+AWS_PUBLIC_MEDIA_LOCATION = secrets.OBJECT_SPACE['public_media_location']
+AWS_PRIVATE_MEDIA_LOCATION = secrets.OBJECT_SPACE['private_media_location']
+
+AWS_DEFAULT_ACL = 'public-read'
+
+AWS_S3_OBJECT_PARAMETERS = {
+    'CacheControl': 'max-age=600',
+}
+
+AWS_IS_GZIPPED = True  # Default: False
+
+# GZIP_CONTENT_TYPES = ''
+
+MEDIA_ROOT = 'mediafiles/'
+
+STATIC_ROOT = 'staticfiles/'
+
 MEDIA_URL = '/media/'
 
-STATIC_URL = '/static/'
+STATIC_URL = f'{AWS_S3_ENDPOINT_URL}/'
 
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'static'),
 ]
 
-if DEBUG:
-    STATIC_ROOT = 'staticfiles'
+DEFAULT_FILE_STORAGE = 'lua_server.storage_backends.MediaStorage'
 
-    MEDIA_ROOT = 'mediafiles'
-
-else:
-    STATIC_ROOT = '/var/www/lualms/staticfiles'
-
-    MEDIA_ROOT = '/var/www/lualms/mediafiles'
+STATICFILES_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
 
 
 # CKEditor configuration
@@ -360,8 +394,9 @@ SWAGGER_SETTINGS = {
 }
 
 
-# 2-Factor Authentication
+# Authentication
 
+# 2-FA
 OTP_TOTP_ISSUER = "Lua Learning Management System"
 
 LOGIN_URL = 'two_factor:login'
@@ -383,6 +418,11 @@ TWILIO_ACCOUNT_SID = secrets.TWILIO['SID']
 TWILIO_AUTH_TOKEN = secrets.TWILIO['TOKEN']
 
 TWILIO_CALLER_ID = secrets.TWILIO['CALLER_ID']
+
+
+# User Account Registration
+
+ACCOUNT_ACTIVATION_DAYS = 7
 
 
 # Error Logging
