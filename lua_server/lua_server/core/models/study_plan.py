@@ -56,7 +56,7 @@ class StudyModule(models.Model):
     plan = models.ForeignKey(StudyPlan, related_name='modules', on_delete=models.CASCADE)
 
     # Instructor responsible for the plan
-    instructor = models.ForeignKey(Instructor, related_name='managed_plans', on_delete=models.DO_NOTHING)
+    instructor = models.ForeignKey(Instructor, related_name='managed_modules', on_delete=models.DO_NOTHING)
 
     title = models.CharField(max_length=250)
 

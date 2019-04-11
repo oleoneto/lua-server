@@ -7,10 +7,8 @@ class InstructorSerializer(UserSerializer):
 
     created_plans = StudyPlanSerializer(many=True)
 
-    managed_plans = StudyPlanSerializer(many=True)
-
     included_serializers = {
-        'plans': StudyPlanSerializer
+        'created_plans': StudyPlanSerializer
     }
 
     class Meta(UserSerializer.Meta):
