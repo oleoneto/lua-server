@@ -1,6 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser
 from .helpers.identifier import make_identifier
+from .helpers.invalid_usernames import INVALID_USERNAMES
 from .managers.user import UserManager
 from rest_framework.authtoken.models import Token
 
@@ -213,6 +214,8 @@ class User(AbstractUser):
     def save(self, *args, **kwargs):
         if not self.id:
             self.id = make_identifier()
+        if self.username in INVALID_USERNAMES:
+            raise ValueError
         super().save(*args, **kwargs)
         Token.objects.get_or_create(user_id=self.id)
 
