@@ -175,21 +175,28 @@ elif os.environ.get("DATABASE_URL"):
 
     CELERY_BROKER_URL = os.environ.get("REDIS_URL", "") + "/1"
     CELERY_RESULT_BACKEND = os.environ.get("REDIS_URL", "") + "/1"
-else:
-    # Stuff for when running locally.
-    if os.environ.get('LOCAL_MACHINE', False):
 
-        CELERY_TASK_ALWAYS_EAGER = True
-        DATABASES = {
-            'default': {
-                'ENGINE': 'django.db.backends.postgresql',
-                'NAME': 'LUA_DB',
-                'USER': 'csneto',
-                'HOST': 'localhost',
-                'PORT': '5432',
-                'PASSWORD': 'someone better change this before it is too late',
-            }
-         }
+elif os.environ.get('LOCAL_MACHINE'):
+    # Stuff for when running locally.
+
+    CELERY_TASK_ALWAYS_EAGER = True
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.postgresql',
+            'NAME': 'LUA_DB',
+            'USER': 'csneto',
+            'HOST': 'localhost',
+            'PORT': '5432',
+            'PASSWORD': 'someone better change this before it is too late',
+        }
+     }
+else:
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.sqlite3',
+            'NAME': 'database.sqlite3'
+        }
+    }
 
 if os.getenv("EMAIL_HOST_PASSWORD", ""):
     # TODO: Change these to match email provider.
