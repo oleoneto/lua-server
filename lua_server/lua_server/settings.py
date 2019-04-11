@@ -177,19 +177,20 @@ elif os.environ.get("DATABASE_URL"):
     CELERY_RESULT_BACKEND = os.environ.get("REDIS_URL", "") + "/1"
 else:
     # Stuff for when running locally.
-    from . import secrets
+    if os.environ.get('LOCAL_MACHINE', False):
+        from . import secrets
 
-    CELERY_TASK_ALWAYS_EAGER = True
-    DATABASES = {
-        'default': {
-            'ENGINE': secrets.DATABASES['postgres']['ENGINE'],
-            'NAME': secrets.DATABASES['postgres']['NAME'],
-            'USER': 'csneto',
-            'HOST': 'localhost',
-            'PORT': secrets.DATABASES['postgres']['PORT'],
-            'PASSWORD': secrets.DATABASES['postgres']['PASSWORD']
+        CELERY_TASK_ALWAYS_EAGER = True
+        DATABASES = {
+            'default': {
+                'ENGINE': secrets.DATABASES['postgres']['ENGINE'],
+                'NAME': secrets.DATABASES['postgres']['NAME'],
+                'USER': 'csneto',
+                'HOST': 'localhost',
+                'PORT': secrets.DATABASES['postgres']['PORT'],
+                'PASSWORD': secrets.DATABASES['postgres']['PASSWORD']
+             }
          }
-     }
 
 if os.getenv("EMAIL_HOST_PASSWORD", ""):
     # TODO: Change these to match email provider.
