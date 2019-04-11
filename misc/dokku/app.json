@@ -1,7 +1,8 @@
 {
   "scripts": {
     "dokku": {
-      "predeploy": "/code/manage.py migrate --noinput"
+      "predeploy": "/code/manage.py makemigrations core && /code/manage.py migrate core && /code/manage.py migrate --noinput",
+      "postdeploy": "curl -X POST -H 'Content-type: application/json' --data '{\"text\":\"Successfully deployed Lua LMS\"}' https://hooks.slack.com/services/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"
     }
   }
 }
