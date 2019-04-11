@@ -6,6 +6,6 @@ from .permissions.is_owner import IsAuthorOrReadOnly
 
 
 class PostViewSet(viewsets.ModelViewSet):
-    queryset = Post.objects.all()
+    queryset = Post.objects.public()
     serializer_class = PostSerializer
     permission_classes = (permissions.IsAuthenticated, IsAuthorOrReadOnly)

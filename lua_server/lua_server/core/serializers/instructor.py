@@ -1,20 +1,17 @@
-from rest_framework import serializers
+from ..serializers.user import UserSerializer
 from ..models.instructor import Instructor
+from ..serializers.study_plan import StudyPlanSerializer
 
 
-class InstructorSerializer(serializers.ModelSerializer):
-    
-    # Add related fields below:
-    # Example relation fields are:
-    # -- HyperlinkedIdentityField
-    # -- HyperlinkedRelatedField
-    # -- PrimaryKeyRelatedField
-    # -- SlugRelatedField
-    # -- StringRelatedField
-    
-    # You can also create a custom serializer, like so:
-    # likes = LikeSerializer(many=True)
+class InstructorSerializer(UserSerializer):
 
-    class Meta:
+    created_plans = StudyPlanSerializer(many=True)
+
+    managed_plans = StudyPlanSerializer(many=True)
+
+    included_serializers = {
+        'plans': StudyPlanSerializer
+    }
+
+    class Meta(UserSerializer.Meta):
         model = Instructor
-        fields = "__all__"
