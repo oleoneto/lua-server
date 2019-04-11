@@ -1,2 +1,2 @@
 release: python manage.py collectstatic --noinput
-web: gunicorn lua_server.wsgi --log-file guinicorn.log
+# web: gunicorn lua_server.wsgi
