@@ -1,13 +1,12 @@
 from django.db import models
 from ckeditor.fields import RichTextField
-from cloudinary.models import CloudinaryField
 from .helpers.identifier import make_identifier
 from .user import User
 
 
 class Planner(models.Model):
     id = models.BigIntegerField(primary_key=True, editable=False)
-    user = models.ForeignKey(User, related_name='planners', on_delete=models.DO_NOTHING)
+    user = models.OneToOneField(User, related_name='planners', on_delete=models.DO_NOTHING)
 
     created_at = models.DateTimeField(auto_now_add=True, editable=False)
     updated_at = models.DateTimeField(auto_now=True, editable=False)
@@ -37,6 +36,8 @@ class PlannerEntry(models.Model):
     class Meta:
         db_table = 'user_planner_entries'
         ordering = ['-created_at']
+        verbose_name = 'Entry'
+        verbose_name_plural = 'Entries'
 
     def save(self, *args, **kwargs):
         if not self.id:

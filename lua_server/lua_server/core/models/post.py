@@ -1,26 +1,30 @@
 from django.db import models
+from django.contrib.auth import get_user_model
 from ckeditor.fields import RichTextField
 from polymorphic.models import PolymorphicModel
 from .helpers.identifier import make_identifier
+from .managers.post import PostManager
 from .user import User
 
 
-STATUS = (
-    ('D', 'Draft'),
-    ('P', 'Published'),
-    ('R', 'For Review')
-)
-
-
 class Post(PolymorphicModel):
+    STATUS = (
+        ('D', 'Draft'),
+        ('P', 'Published'),
+        ('R', 'For Review')
+    )
+
     id = models.BigIntegerField(primary_key=True, editable=False)
-    author = models.ForeignKey(User, related_name='posts', on_delete=models.DO_NOTHING)
+    author = models.ForeignKey(get_user_model(), related_name='posts', on_delete=models.DO_NOTHING, editable=False)
     content = RichTextField()
     status = models.CharField(max_length=2, choices=STATUS, default='P')
     is_private = models.BooleanField(default=False)
 
     created_at = models.DateTimeField(auto_now_add=True, editable=False)
     updated_at = models.DateTimeField(auto_now=True, editable=False)
+
+    # Model managers
+    objects = PostManager()
 
     class Meta:
         db_table = 'posts'
@@ -47,7 +51,6 @@ class Lecture(Post):
 
 
 class Comment(Post):
-    # Due to naming conflicts, this field will be called post instead of lecture
     post = models.ForeignKey(Lecture, related_name='comments', on_delete=models.CASCADE)
     is_inappropriate = models.BooleanField(default=False)
 

@@ -11,6 +11,9 @@ class Instructor(User):
     class Meta:
         db_table = 'user_instructors'
         ordering = ['-created_at']
+        permissions = (
+            ('can_create_plans', 'Can create student plans'),
+        )
 
     def save(self, *args, **kwargs):
         if not self.id:

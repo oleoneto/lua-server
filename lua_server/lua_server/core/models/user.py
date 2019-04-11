@@ -1,7 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser
-from cloudinary.models import CloudinaryField
-from lua_server.core.models.helpers.identifier import make_identifier
+from .helpers.identifier import make_identifier
+from .managers.user import UserManager
 from rest_framework.authtoken.models import Token
 
 
@@ -198,7 +198,7 @@ LANGUAGES = (
 
 class User(AbstractUser):
     id = models.BigIntegerField(primary_key=True, editable=False)
-    profile_picture = CloudinaryField('image', blank=True)
+    photo = models.ImageField(upload_to='users/profiles/', blank=True)
 
     created_at = models.DateTimeField(auto_now_add=True, editable=False)
     updated_at = models.DateTimeField(auto_now=True, editable=False)
