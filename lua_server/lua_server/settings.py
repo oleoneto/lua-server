@@ -13,7 +13,6 @@ https://docs.djangoproject.com/en/2.1/ref/settings/
 import os
 import re
 from datetime import timedelta
-from . import secrets
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -178,6 +177,7 @@ elif os.environ.get("DATABASE_URL"):
     CELERY_RESULT_BACKEND = os.environ.get("REDIS_URL", "") + "/1"
 else:
     # Stuff for when running locally.
+    from . import secrets
 
     CELERY_TASK_ALWAYS_EAGER = True
     DATABASES = {
@@ -244,18 +244,18 @@ USE_TZ = True
 # Moving static assets to DigitalOcean Spaces as per:
 # https://www.digitalocean.com/community/tutorials/how-to-set-up-object-storage-with-django
 
-AWS_ACCESS_KEY_ID = secrets.OBJECT_SPACE['access_key_id']
-AWS_SECRET_ACCESS_KEY = secrets.OBJECT_SPACE['secret_key']
+AWS_ACCESS_KEY_ID = os.environ.get('AWS_ACCESS_KEY_ID')
+AWS_SECRET_ACCESS_KEY = os.environ.get('AWS_SECRET_ACCESS_KEY')
 
-AWS_STORAGE_BUCKET_NAME = secrets.OBJECT_SPACE['bucket_name']
+AWS_STORAGE_BUCKET_NAME = os.environ.get('AWS_STORAGE_BUCKET_NAME')
 
-AWS_S3_ENDPOINT_URL = secrets.OBJECT_SPACE['endpoint_url']
-AWS_S3_CUSTOM_DOMAIN = secrets.OBJECT_SPACE['edge_domain']
+AWS_S3_ENDPOINT_URL = os.environ.get('AWS_ENDPOINT_URL')
+AWS_S3_CUSTOM_DOMAIN = os.environ.get('AWS_CUSTOM_DOMAIN')
 
-AWS_LOCATION = secrets.OBJECT_SPACE['public_location']
-AWS_STATIC_LOCATION = secrets.OBJECT_SPACE['public_static_location']
-AWS_PUBLIC_MEDIA_LOCATION = secrets.OBJECT_SPACE['public_media_location']
-AWS_PRIVATE_MEDIA_LOCATION = secrets.OBJECT_SPACE['private_media_location']
+AWS_LOCATION = os.environ.get('AWS_LOCATION')
+AWS_STATIC_LOCATION = os.environ.get('AWS_STATIC_LOCATION')
+AWS_PUBLIC_MEDIA_LOCATION = os.environ.get('AWS_MEDIA_LOCATION')
+AWS_PRIVATE_MEDIA_LOCATION = os.environ.get('AWS_PRIVATE_MEDIA_LOCATION')
 
 AWS_DEFAULT_ACL = 'public-read'
 
@@ -468,11 +468,11 @@ TWO_FACTOR_SMS_GATEWAY = 'two_factor.gateways.twilio.gateway.Twilio'
 
 # PHONENUMBER_DEFAULT_REGION = # Default: None
 
-TWILIO_ACCOUNT_SID = secrets.TWILIO['SID']
+TWILIO_ACCOUNT_SID = os.environ.get('TWILIO_SID')
 
-TWILIO_AUTH_TOKEN = secrets.TWILIO['TOKEN']
+TWILIO_AUTH_TOKEN = os.environ.get('TWILIO_TOKEN')
 
-TWILIO_CALLER_ID = secrets.TWILIO['CALLER_ID']
+TWILIO_CALLER_ID = os.environ.get('TWILIO_CALLER_ID')
 
 
 # User Account Registration
@@ -487,7 +487,7 @@ ACCOUNT_ACTIVATION_DAYS = 7
 # See http://docs.djangoproject.com/en/dev/topics/logging for
 # more details on how to customize your logging configuration.
 
-ADMINS = secrets.ADMINS
+ADMINS = os.environ.get('ADMINS')
 
 MANAGERS = ADMINS
 
