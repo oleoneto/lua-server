@@ -13,11 +13,11 @@ ADD requirements.txt /code/
 RUN pip install -Ur /code/requirements.txt
 
 # Add the Dokku-specific files to their locations.
-ADD misc/dokku/CHECKS /app/
+ADD misc /app/
 ADD misc/dokku/* /code/
 
 # Copy the code and collect static media.
 # Using and S3 space for the files
 WORKDIR /code
-COPY . /code/
+COPY lua_server /code/
 RUN /code/manage.py collectstatic --noinput
