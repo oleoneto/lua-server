@@ -178,18 +178,17 @@ elif os.environ.get("DATABASE_URL"):
 else:
     # Stuff for when running locally.
     if os.environ.get('LOCAL_MACHINE', False):
-        from . import secrets
 
         CELERY_TASK_ALWAYS_EAGER = True
         DATABASES = {
             'default': {
-                'ENGINE': secrets.DATABASES['postgres']['ENGINE'],
-                'NAME': secrets.DATABASES['postgres']['NAME'],
+                'ENGINE': 'django.db.backends.postgresql',
+                'NAME': 'LUA_DB',
                 'USER': 'csneto',
                 'HOST': 'localhost',
-                'PORT': secrets.DATABASES['postgres']['PORT'],
-                'PASSWORD': secrets.DATABASES['postgres']['PASSWORD']
-             }
+                'PORT': '5432',
+                'PASSWORD': 'someone better change this before it is too late',
+            }
          }
 
 if os.getenv("EMAIL_HOST_PASSWORD", ""):
@@ -245,18 +244,18 @@ USE_TZ = True
 # Moving static assets to DigitalOcean Spaces as per:
 # https://www.digitalocean.com/community/tutorials/how-to-set-up-object-storage-with-django
 
-AWS_ACCESS_KEY_ID = os.environ.get('AWS_ACCESS_KEY_ID', secrets.AWS['AWS_ACCESS_KEY_ID'])
-AWS_SECRET_ACCESS_KEY = os.environ.get('AWS_SECRET_ACCESS_KEY', secrets.AWS['AWS_SECRET_ACCESS_KEY'])
+AWS_ACCESS_KEY_ID = os.environ.get('AWS_ACCESS_KEY_ID')
+AWS_SECRET_ACCESS_KEY = os.environ.get('AWS_SECRET_ACCESS_KEY')
 
-AWS_STORAGE_BUCKET_NAME = os.environ.get('AWS_BUCKET_NAME', secrets.AWS['AWS_BUCKET_NAME'])
+AWS_STORAGE_BUCKET_NAME = os.environ.get('AWS_BUCKET_NAME')
 
-AWS_S3_ENDPOINT_URL = os.environ.get('AWS_ENDPOINT_URL', secrets.AWS['AWS_ENDPOINT_URL'])
-AWS_S3_CUSTOM_DOMAIN = os.environ.get('AWS_CUSTOM_DOMAIN', secrets.AWS['AWS_CUSTOM_DOMAIN'])
+AWS_S3_ENDPOINT_URL = os.environ.get('AWS_ENDPOINT_URL')
+AWS_S3_CUSTOM_DOMAIN = os.environ.get('AWS_CUSTOM_DOMAIN')
 
-AWS_LOCATION = os.environ.get('AWS_LOCATION', secrets.AWS['AWS_LOCATION'])
-AWS_STATIC_LOCATION = os.environ.get('AWS_STATIC_LOCATION', secrets.AWS['AWS_STATIC_LOCATION'])
-AWS_PUBLIC_MEDIA_LOCATION = os.environ.get('AWS_MEDIA_LOCATION', secrets.AWS['AWS_MEDIA_LOCATION'])
-AWS_PRIVATE_MEDIA_LOCATION = os.environ.get('AWS_PRIVATE_MEDIA_LOCATION', secrets.AWS['AWS_PRIVATE_MEDIA_LOCATION'])
+AWS_LOCATION = os.environ.get('AWS_LOCATION')
+AWS_STATIC_LOCATION = os.environ.get('AWS_STATIC_LOCATION')
+AWS_PUBLIC_MEDIA_LOCATION = os.environ.get('AWS_MEDIA_LOCATION')
+AWS_PRIVATE_MEDIA_LOCATION = os.environ.get('AWS_PRIVATE_MEDIA_LOCATION')
 
 AWS_DEFAULT_ACL = 'public-read'
 
@@ -469,11 +468,11 @@ TWO_FACTOR_SMS_GATEWAY = 'two_factor.gateways.twilio.gateway.Twilio'
 
 # PHONENUMBER_DEFAULT_REGION = # Default: None
 
-TWILIO_ACCOUNT_SID = os.environ.get('TWILIO_SID', secrets.TWILIO['SID'])
+TWILIO_ACCOUNT_SID = os.environ.get('TWILIO_SID')
 
-TWILIO_AUTH_TOKEN = os.environ.get('TWILIO_TOKEN', secrets.TWILIO['TOKEN'])
+TWILIO_AUTH_TOKEN = os.environ.get('TWILIO_TOKEN')
 
-TWILIO_CALLER_ID = os.environ.get('TWILIO_CALLER_ID', secrets.TWILIO['CALLER_ID'])
+TWILIO_CALLER_ID = os.environ.get('TWILIO_CALLER_ID')
 
 
 # User Account Registration
