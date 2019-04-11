@@ -281,14 +281,14 @@ STATICFILES_DIRS = [
 
 DEFAULT_FILE_STORAGE = 'lua_server.storage_backends.MediaStorage'
 
-STATICFILES_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
+STATICFILES_STORAGE = 'lua_server.storage_backends.StaticStorage'
 
 
 # CKEditor configuration
 
 # CKEDITOR_BASEPATH = f'static/'
 
-CKEDITOR_UPLOAD_PATH = f'{MEDIA_ROOT}/'
+CKEDITOR_UPLOAD_PATH = 'editor/'
 
 CKEDITOR_RESTRICT_BY_USER = True
 
