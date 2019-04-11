@@ -15,9 +15,9 @@ django-redis
 Celery
 gunicorn
 
-# Postgres SQL
+# Databases
 psycopg2-binary
-
+djongo
 
 # Cloud
 cloudinary
