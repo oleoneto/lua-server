@@ -1,7 +1,10 @@
+{% extends 'components/__master__.html' %}
 {% load static from staticfiles %}
 
 {% comment %}
     Describe the template here.
 {% endcomment %}
 
-{% block name %}{% endblock %}
+{% block body %}
+    {% include 'components/app-navigation.html' %}
+{% endblock %}
