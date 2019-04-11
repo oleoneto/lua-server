@@ -244,18 +244,18 @@ USE_TZ = True
 # Moving static assets to DigitalOcean Spaces as per:
 # https://www.digitalocean.com/community/tutorials/how-to-set-up-object-storage-with-django
 
-AWS_ACCESS_KEY_ID = os.environ.get('AWS_ACCESS_KEY_ID', secrets.AWS['access_key_id'])
-AWS_SECRET_ACCESS_KEY = os.environ.get('AWS_SECRET_ACCESS_KEY', secrets.AWS['secret_key'])
+AWS_ACCESS_KEY_ID = os.environ.get('AWS_ACCESS_KEY_ID', secrets.AWS['AWS_ACCESS_KEY_ID'])
+AWS_SECRET_ACCESS_KEY = os.environ.get('AWS_SECRET_ACCESS_KEY', secrets.AWS['AWS_SECRET_ACCESS_KEY'])
 
-AWS_STORAGE_BUCKET_NAME = os.environ.get('AWS_STORAGE_BUCKET_NAME', secrets.AWS['bucket_name'])
+AWS_STORAGE_BUCKET_NAME = os.environ.get('AWS_STORAGE_BUCKET_NAME', secrets.AWS['AWS_BUCKET_NAME'])
 
-AWS_S3_ENDPOINT_URL = os.environ.get('AWS_ENDPOINT_URL', secrets.AWS['endpoint_url'])
-AWS_S3_CUSTOM_DOMAIN = os.environ.get('AWS_CUSTOM_DOMAIN', secrets.AWS['edge_domain'])
+AWS_S3_ENDPOINT_URL = os.environ.get('AWS_ENDPOINT_URL', secrets.AWS['AWS_ENDPOINT_URL'])
+AWS_S3_CUSTOM_DOMAIN = os.environ.get('AWS_CUSTOM_DOMAIN', secrets.AWS['AWS_CUSTOM_DOMAIN'])
 
-AWS_LOCATION = os.environ.get('AWS_LOCATION', secrets.AWS['public_location'])
-AWS_STATIC_LOCATION = os.environ.get('AWS_STATIC_LOCATION', secrets.AWS['public_static_location'])
-AWS_PUBLIC_MEDIA_LOCATION = os.environ.get('AWS_MEDIA_LOCATION', secrets.AWS['public_media_location'])
-AWS_PRIVATE_MEDIA_LOCATION = os.environ.get('AWS_PRIVATE_MEDIA_LOCATION', secrets.AWS['private_media_location'])
+AWS_LOCATION = os.environ.get('AWS_LOCATION', secrets.AWS['AWS_LOCATION'])
+AWS_STATIC_LOCATION = os.environ.get('AWS_STATIC_LOCATION', secrets.AWS['AWS_STATIC_LOCATION'])
+AWS_PUBLIC_MEDIA_LOCATION = os.environ.get('AWS_MEDIA_LOCATION', secrets.AWS['AWS_MEDIA_LOCATION'])
+AWS_PRIVATE_MEDIA_LOCATION = os.environ.get('AWS_PRIVATE_MEDIA_LOCATION', secrets.AWS['AWS_PRIVATE_MEDIA_LOCATION'])
 
 AWS_DEFAULT_ACL = 'public-read'
 
