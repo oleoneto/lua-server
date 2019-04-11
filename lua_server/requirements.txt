@@ -11,8 +11,9 @@ django-polymorphic
 django-redis
 
 
-# Task and Event Queueing
+# Event Queueing, Web workers
 Celery
+gunicorn
 
 # Postgres SQL
 psycopg2-binary
