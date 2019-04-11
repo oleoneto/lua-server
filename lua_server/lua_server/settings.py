@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/2.1/ref/settings/
 """
 
 import os
+import re
 from datetime import timedelta
 from . import secrets
 
@@ -22,15 +23,12 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # See https://docs.djangoproject.com/en/2.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = secrets.SECRET_KEY
+SECRET_KEY = os.environ.get("SECRET_KEY", 'This is a default value')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True # os.environ.get('DEBUG', False) == 'True'
+DEBUG = True if os.environ.get("NODEBUG") is None else False
 
-if DEBUG:
-    ALLOWED_HOSTS = ['*']
-else:
-    ALLOWED_HOSTS = ['.lualms.com']
+ALLOWED_HOSTS = ["*"] if os.environ.get("NODEBUG") is None else [".lualms.com"]
 
 
 # Application definition
@@ -128,26 +126,83 @@ WSGI_APPLICATION = 'lua_server.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/2.1/ref/settings/#databases
 
-DATABASES = {
-    'default': {
-        'ENGINE': secrets.DATABASES['postgres']['ENGINE'],
-        'NAME': secrets.DATABASES['postgres']['NAME'],
-        'USER': 'csneto', # secrets.DATABASES['postgres']['USER'],
-        'HOST': 'localhost', # secrets.DATABASES['postgres']['HOST'],
-        'PORT': secrets.DATABASES['postgres']['PORT'],
-        'PASSWORD': secrets.DATABASES['postgres']['PASSWORD'],
-    }
-}
+if os.environ.get("IN_DOCKER"):
+    # Stuff for when running in Docker-compose.
 
-CACHES = {
-    'default': {
-        'BACKEND': 'django_redis.cache.RedisCache',
-        'LOCATION': 'redis://127.0.0.1:6379/',
-        'OPTIONS': {
-            'CLIENT_CLASS': 'django_redis.client.DefaultClient',
+    CELERY_BROKER_URL = 'redis://redis:6379/1'
+    CELERY_RESULT_BACKEND = 'redis://redis:6379/1'
+
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.postgresql_psycopg2',
+            'NAME': "postgres",
+            'USER': 'postgres',
+            'PASSWORD': 'password',
+            'HOST': "db",
+            'PORT': 5432,
         }
     }
-}
+elif os.environ.get("DATABASE_URL"):
+    # Stuff for when running in Dokku.
+
+    # Parse the DATABASE_URL env var.
+    USER, PASSWORD, HOST, PORT, NAME = re.match("^postgres://(?P<username>.*?)\:(?P<password>.*?)\@(?P<host>.*?)\:(?P<port>\d+)\/(?P<db>.*?)$", os.environ.get("DATABASE_URL", "")).groups()
+
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.postgresql_psycopg2',
+            'NAME': NAME,
+            'USER': USER,
+            'PASSWORD': PASSWORD,
+            'HOST': HOST,
+            'PORT': int(PORT),
+        }
+    }
+
+    CACHES = {
+        "default": {
+            "BACKEND": "django_redis.cache.RedisCache",
+            "LOCATION": os.getenv("REDIS_URL", "") + "/1",
+            "OPTIONS": {"CLIENT_CLASS": "django_redis.client.DefaultClient"},
+        }
+    }
+
+    SESSION_CACHE_ALIAS = "default"
+    SESSION_ENGINE = "django.contrib.sessions.backends.cache"
+    SESSION_COOKIE_AGE = 365 * 24 * 60 * 60
+    SESSION_COOKIE_SECURE = True
+
+    CSRF_COOKIE_SECURE = True
+
+    CELERY_BROKER_URL = os.environ.get("REDIS_URL", "") + "/1"
+    CELERY_RESULT_BACKEND = os.environ.get("REDIS_URL", "") + "/1"
+else:
+    # Stuff for when running locally.
+
+    CELERY_TASK_ALWAYS_EAGER = True
+    DATABASES = {
+        'default': {
+            'ENGINE': secrets.DATABASES['postgres']['ENGINE'],
+            'NAME': secrets.DATABASES['postgres']['NAME'],
+            'USER': 'csneto',
+            'HOST': 'localhost',
+            'PORT': secrets.DATABASES['postgres']['PORT'],
+            'PASSWORD': secrets.DATABASES['postgres']['PASSWORD']
+         }
+     }
+
+if os.getenv("EMAIL_HOST_PASSWORD", ""):
+    # TODO: Change these to match email provider.
+    EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
+
+    EMAIL_USE_TLS = True
+    EMAIL_HOST = "smtp.lualms.com"
+    EMAIL_HOST_USER = "server"
+    EMAIL_HOST_PASSWORD = os.getenv("EMAIL_HOST_PASSWORD", "")
+    EMAIL_PORT = 587
+else:
+    EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
+
 
 # Password validation
 # https://docs.djangoproject.com/en/2.1/ref/settings/#auth-password-validators
