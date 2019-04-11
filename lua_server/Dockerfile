@@ -1,41 +1,24 @@
-FROM python:3.6.5
-
-# Environment variables
-ENV PYTHONDONTWRITEBYTECODE 1
+FROM python:latest
 ENV PYTHONUNBUFFERED 1
+RUN apt-get update
 
+# Install some necessary dependencies.
+RUN apt-get install -y swig libssl-dev dpkg-dev netcat
 
+# Install the requirements. This is done early so the requirements
+# don't need to be reinstalled every time something unrelated changes,
+# which would otherwise happen due to the way Docker does image
+# caching.
+RUN pip install -U pip
+ADD requirements.txt /code/
+RUN pip install -Ur /code/requirements.txt
 
-# Set working directory
-WORKDIR /usr/src/application/
+# Add the Dokku-specific files to their locations.
+ADD misc/dokku/CHECKS /app/
+ADD misc/dokku/* /code/
 
-
-
-# Copy requirements to working directory
-COPY ./requirements.txt .
-
-
-
-# Copy start script
-COPY ./start.sh .
-
-
-
-# Install requirements
-RUN pip install --upgrade pip
-RUN pip install -r requirements.txt
-
-
-
-# Copy project files
-COPY . /usr/src/application/
-
-
-
-# Expose port NUMBER to allow communication to/from server
-EXPOSE 80
-EXPOSE 8000
-
-
-# Specify start script
-ENTRYPOINT ["/bin/bash", "/usr/src/application/start.sh"]
+# Copy the code and collect static media.
+# You can use whitenoise to serve them, or CloudFront to proxy them.
+WORKDIR /code
+COPY . /code/
+RUN /code/manage.py collectstatic --noinput
