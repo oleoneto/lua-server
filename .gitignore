@@ -3,6 +3,8 @@
 .vscode
 DS_Store
 init.sql
+docker
+start.sh
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
