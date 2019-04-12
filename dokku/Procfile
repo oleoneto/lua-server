@@ -1,2 +1,3 @@
-web: gunicorn lua.wsgi:application
-# release: python manage.py collectstatic --noinput
+web: gunicorn lua.wsgi
+beat: celery beat -A lua -linfo
+worker: celery worker -A lua -linfo
