@@ -1,3 +1,1 @@
 web: gunicorn lua.wsgi
-beat: celery beat -A lua -linfo
-worker: celery worker -A lua -linfo
