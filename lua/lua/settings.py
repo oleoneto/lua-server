@@ -25,7 +25,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = os.environ.get("SECRET_KEY", 'This is a default value')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True if os.environ.get("DEBUG") else False
+DEBUG = os.environ.get("DEBUG") == 'True'
 
 ALLOWED_HOSTS = ["*"] if os.environ.get("DEBUG") else [".lualms.com"]
 
