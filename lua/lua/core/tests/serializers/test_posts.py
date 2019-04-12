@@ -1,7 +1,7 @@
 from rest_framework import status
 from rest_framework.test import APIClient, APITestCase
-from lua_server.core.models.user import User
-from lua_server.core.models.post import Comment, Lecture
+from lua.lua.core.models.user import User
+from lua.lua.core.models.post import Comment, Lecture
 
 
 class PostTestCase(APITestCase):
