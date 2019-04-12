@@ -20,3 +20,7 @@ ADD dokku /code/
 # Using and S3 space for the files
 WORKDIR /code
 COPY lua /code/
+COPY release-tasks.sh /code/.release-tasks.sh
+COPY notify.sh /code/.notify.sh
+RUN chmod 755 /code/.release-tasks.sh
+RUN chmod 755 /code/.notify.sh
