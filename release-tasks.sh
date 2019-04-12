@@ -3,4 +3,4 @@
 python manage.py makemigrations core && \
 python manage.py migrate core && \
 python manage.py migrate --noinput && \
-/.notify.sh "Lua LMS is live!!"
+./.notify.sh "Lua LMS is live!!"
