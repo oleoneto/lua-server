@@ -1,4 +1,4 @@
-"""lua_server URL Configuration
+"""lua URL Configuration
 
 The `urlpatterns` list routes URLs to views. For more information please see:
     https://docs.djangoproject.com/en/2.1/topics/http/urls/
@@ -28,7 +28,7 @@ urlpatterns = [
     path('', include(tf_twilio_urls)),
 
     # ...
-    path('', include('lua_server.core.urls')),
+    path('', include('lua.core.urls')),
 
     path('ckeditor/', include('ckeditor_uploader.urls')),
 ]

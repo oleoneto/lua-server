@@ -32,7 +32,7 @@ def read_env():
 
 
 if __name__ == '__main__':
-    os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'lua_server.settings')
+    os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'lua.settings')
 
     read_env()
 
