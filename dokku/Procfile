@@ -1,3 +1,2 @@
-release: python manage.py collectstatic --noinput
 web: gunicorn lua_server.wsgi
-# worker: /usr/local/bin/celery -A lua_server worker -P gevent
+release: python manage.py collectstatic --noinput
