@@ -19,5 +19,5 @@ ADD dokku /code/
 # Copy the code and collect static media.
 # Using and S3 space for the files
 WORKDIR /code
-COPY lua_server /code/
+COPY . /code/
 #RUN /code/manage.py collectstatic --noinput
