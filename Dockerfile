@@ -20,4 +20,3 @@ ADD dokku /code/
 # Using and S3 space for the files
 WORKDIR /code
 COPY lua_server /code/
-#RUN /code/manage.py collectstatic --noinput
