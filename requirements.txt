@@ -12,7 +12,6 @@ django-redis
 
 
 # Event Queueing, Web workers
-Celery
 gunicorn
 
 # Databases
