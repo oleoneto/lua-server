@@ -1,2 +1,2 @@
-web: gunicorn lua.wsgi.application
+web: gunicorn lua.wsgi
 release: python manage.py collectstatic --noinput
