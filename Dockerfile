@@ -13,8 +13,8 @@ ADD requirements.txt /code/
 RUN pip install -Ur /code/requirements.txt
 
 # Add the Dokku-specific files to their locations.
-ADD misc /app/
-ADD misc/dokku/* /code/
+ADD dokku /app/
+ADD dokku /code/
 
 # Copy the code and collect static media.
 # Using and S3 space for the files
