@@ -5,6 +5,7 @@ DS_Store
 init.sql
 docker
 start.sh
+_scratch
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
