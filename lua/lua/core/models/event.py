@@ -8,6 +8,8 @@ from .planner import Planner
 
 
 class Event(models.Model):
+    id = models.BigIntegerField(primary_key=True, editable=False)
+
     # `author_id` should be automatically set to the current user. Check implementation in `admin/event.py`
     author = models.ForeignKey(get_user_model(), related_name='events', on_delete=models.DO_NOTHING, editable=False)
 
