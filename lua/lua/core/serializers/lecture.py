@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from ..models.post import Lecture
+from ..models.lecture import Lecture
 from .helpers.choices import ChoicesSerializerField
 
 

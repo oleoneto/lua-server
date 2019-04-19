@@ -1,4 +1,5 @@
 from django.db import models
+from django.contrib.postgres.fields import ArrayField
 from ..helpers.identifier import make_identifier
 from ckeditor.fields import RichTextField
 
@@ -6,8 +7,8 @@ from ckeditor.fields import RichTextField
 class BasePost(models.Model):
     id = models.BigIntegerField(primary_key=True, editable=False)
     title = models.CharField(max_length=250)
-    slug = models.SlugField(unique_for_month=True, allow_unicode=True)
     content = RichTextField()
+    tags = ArrayField(models.CharField(max_length=200), blank=True)
     is_draft = models.BooleanField(default=True)
 
     created_at = models.DateTimeField(auto_now_add=True, editable=False)
