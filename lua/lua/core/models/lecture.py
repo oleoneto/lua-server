@@ -4,8 +4,8 @@ from .user import User
 
 
 class Lecture(BasePost):
-    author = models.ForeignKey(User, related_name='lectures', on_delete=models.DO_NOTHING, editable=False)
-    likes = models.ManyToManyField(User, related_name='lecture_likes')
+    author = models.ForeignKey(User, related_name='lectures', on_delete=models.DO_NOTHING)
+    likes = models.ManyToManyField(User, related_name='lecture_likes', blank=True)
 
     class Meta:
         db_table = 'lectures'
