@@ -7,11 +7,11 @@ from .post import Post
 
 class Comment(models.Model):
     id = models.BigIntegerField(primary_key=True, editable=False)
-    author = models.ForeignKey(User, related_name='comments', on_delete=models.DO_NOTHING, editable=False)
+    author = models.ForeignKey(User, related_name='comments', on_delete=models.DO_NOTHING)
     post = models.ForeignKey(Post, related_name='comments', on_delete=models.CASCADE, editable=False)
     content = RichTextField()
-    flags = models.ManyToManyField(User, related_name='comment_flags')
-    likes = models.ManyToManyField(User, related_name='comment_likes')
+    flags = models.ManyToManyField(User, related_name='comment_flags', blank=True)
+    likes = models.ManyToManyField(User, related_name='comment_likes', blank=True)
 
     created_at = models.DateTimeField(auto_now_add=True, editable=False)
     updated_at = models.DateTimeField(auto_now=True, editable=False)
