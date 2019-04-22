@@ -4,11 +4,11 @@ from ..models.student import Student
 from .user import UserAdmin
 
 
-@admin.register(Student)
+# @admin.register(Student)
 class StudentAdmin(UserAdmin):
     inlines = [PlannerInline]
 
-    readonly_fields = ('student_id',)
+    readonly_fields = ('student_id', 'internal_email',)
 
     add_fieldsets = (
         (None, {
@@ -22,7 +22,7 @@ class StudentAdmin(UserAdmin):
         (None, {
             'classes': ('wide',),
             'fields': ('username', 'first_name', 'last_name',
-                       'date_of_birth', 'email', 'student_id', 'password', 'photo')
+                       'date_of_birth', 'email', 'internal_email', 'student_id', 'password', 'photo')
         }),
         ('Permissions', {'fields': ('is_staff',)}),
     )
