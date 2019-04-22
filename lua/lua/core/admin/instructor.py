@@ -5,7 +5,7 @@ from .study_plan import CreatedPlansInline
 from .planner import PlannerInline
 
 
-@admin.register(Instructor)
+# @admin.register(Instructor)
 class InstructorAdmin(UserAdmin):
     inlines = [PlannerInline, CreatedPlansInline]
 

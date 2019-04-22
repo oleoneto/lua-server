@@ -5,9 +5,12 @@ from .instructor import InstructorAdmin
 from .logs import LogEntryAdmin
 from .study_plan import StudyPlanAdmin
 from .planner import PlannerAdmin
-from .post import PostAdmin, LectureAdmin, CommentAdmin
 from .student import StudentAdmin
-
-
-admin.site.site_header = "Lua Learning Platform"
-admin.site.site_title = "Lua Learning Platform"
+from .post import PostAdmin
+from .enrollment import Enrollment
+from .course import Course
+from .comment import Comment
+from .role import Role
+from .term import Term
+from .waitlist import Waitlist
+from .gradebook import Gradebook
