@@ -1,9 +1,24 @@
 from django.db import models
+from django.core.exceptions import ValidationError
 from django.contrib.auth.models import AbstractUser
 from .helpers.identifier import make_identifier
 from .helpers.invalid_usernames import INVALID_USERNAMES
-from .managers.user import UserManager
 from rest_framework.authtoken.models import Token
+from .role import Role
+
+
+DEFAULT_EMAIL_EXTENSION = '@lualms.com'
+
+CONFIRMATION_EMAIL = """
+Dear {},
+
+Your account was successfully created.
+Your API token is: {}.
+You can use your token to authenticate with our services. Please keep this api token secret or report to us if it is misplaced so we can void it.
+
+Sincerely,
+Admin Team @ LuaLMS
+"""
 
 
 LANGUAGES = (
@@ -200,6 +215,10 @@ LANGUAGES = (
 class User(AbstractUser):
     id = models.BigIntegerField(primary_key=True, editable=False)
     photo = models.ImageField(upload_to='users/profiles/', blank=True)
+    internal_email = models.EmailField(blank=True)
+
+    # Using role-based permissions for users
+    roles = models.ManyToManyField(Role, related_name='users')
 
     created_at = models.DateTimeField(auto_now_add=True, editable=False)
     updated_at = models.DateTimeField(auto_now=True, editable=False)
@@ -208,16 +227,29 @@ class User(AbstractUser):
         db_table = 'users'
         ordering = ['-created_at']
 
+    @property
     def name(self):
         return f"{self.first_name} {self.last_name}"
 
+    def clean(self):
+        super().clean()
+        self.username = self.username.lower()
+
     def save(self, *args, **kwargs):
+        will_notify = False
         if not self.id:
             self.id = make_identifier()
+            will_notify = True
         if self.username in INVALID_USERNAMES:
-            raise ValueError
+            raise ValidationError('Invalid username. Please choose a valid username.')
+        if not self.internal_email:
+            self.internal_email = f'{self.username}{DEFAULT_EMAIL_EXTENSION}'
         super().save(*args, **kwargs)
         Token.objects.get_or_create(user_id=self.id)
+
+        if will_notify:
+            self.email_user(subject='LuaLMS: Account successfully created',
+                            message=f'{CONFIRMATION_EMAIL.format(self.name, Token.objects.get(user_id=self.id))}')
 
     def __str__(self):
         return self.username
