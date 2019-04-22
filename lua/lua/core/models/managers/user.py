@@ -1,4 +1,5 @@
 # Remember to use the polymorphic to map models correctly
+from django.contrib.auth.models import UserManager as BaseUserManager
 from polymorphic.managers import PolymorphicManager, PolymorphicQuerySet
 
 
@@ -14,6 +15,10 @@ class UserQuerySet(PolymorphicQuerySet):
 
 
 class UserManager(PolymorphicManager):
+    def get_by_natural_key(self, username):
+        case_insensitive_username_field = '{}__iexact'.format(self.model.USERNAME_FIELD)
+        return self.get(**{case_insensitive_username_field: username})
+
     def get_queryset(self):
         return UserQuerySet(self.model, using=self._db)
 
@@ -25,3 +30,9 @@ class UserManager(PolymorphicManager):
 
     def students(self):
         return self.get_queryset()
+
+
+class CustomUserManager(BaseUserManager):
+    def get_by_natural_key(self, username):
+        case_insensitive_username_field = '{}__iexact'.format(self.model.USERNAME_FIELD)
+        return self.get(**{case_insensitive_username_field: username})
