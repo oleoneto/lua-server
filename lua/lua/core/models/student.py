@@ -2,7 +2,7 @@ from django.db import models
 from .helpers.identifier import make_identifier
 from .helpers.student_identifier import make_student_id
 from .user import User
-from ..models.study_plan import StudyPlan
+from .study_plan import StudyPlan
 
 
 class Student(User):

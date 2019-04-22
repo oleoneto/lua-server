@@ -1,12 +1,10 @@
 from django.contrib import admin
-from .planner import PlannerInline
 from ..models.student import Student
 from .user import UserAdmin
 
 
 # @admin.register(Student)
 class StudentAdmin(UserAdmin):
-    inlines = [PlannerInline]
 
     readonly_fields = ('student_id', 'internal_email',)
 

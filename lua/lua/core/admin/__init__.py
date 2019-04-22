@@ -4,7 +4,6 @@ from .event import EventAdmin
 from .instructor import InstructorAdmin
 from .logs import LogEntryAdmin
 from .study_plan import StudyPlanAdmin
-from .planner import PlannerAdmin
 from .student import StudentAdmin
 from .post import PostAdmin
 from .enrollment import Enrollment
