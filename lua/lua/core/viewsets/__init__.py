@@ -8,7 +8,6 @@ from .student import StudentViewSet
 
 # Agenda
 from .event import EventViewSet
-from .planner import PlannerViewSet
 
 # Classroom
 # from .module import ModuleViewSet
@@ -39,7 +38,8 @@ router.register('courses', CourseViewSet)
 
 
 router.register('events', EventViewSet)
-router.register('planners', PlannerViewSet)
+router.register('calendar', EventViewSet)
+
 
 # router.register('modules', ModuleViewSet)
 router.register('study-plans', StudyPlanViewSet)

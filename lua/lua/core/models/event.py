@@ -1,17 +1,16 @@
 from django.db import models
-from django.contrib.auth import get_user_model
 from django.core.exceptions import ValidationError
 from django.urls import reverse
 from ckeditor.fields import RichTextField
 from .helpers.identifier import make_identifier
-from .planner import Planner
+from .user import User
 
 
 class Event(models.Model):
     id = models.BigIntegerField(primary_key=True, editable=False)
 
     # `author_id` should be automatically set to the current user. Check implementation in `admin/event.py`
-    author = models.ForeignKey(get_user_model(), related_name='events', on_delete=models.DO_NOTHING, editable=False)
+    owner = models.ForeignKey(User, related_name='events', on_delete=models.DO_NOTHING, editable=False)
 
     # Short title/description of the event. i.e "Student Appreciation Day"
     title = models.CharField(max_length=144, default="Event")
@@ -26,11 +25,8 @@ class Event(models.Model):
     # Some notes regarding the context and/or importance of the event
     notes = RichTextField(u'Textual Notes', help_text=u'Textual Notes', blank=True, null=True)
 
-    # If the event is part of a planner, they should be linked here...
-    planner = models.ForeignKey(Planner, related_name='events', on_delete=models.DO_NOTHING, null=True)
-
     # Invite members to be part of this event
-    # participants = models.ManyToManyField(get_user_model())
+    participants = models.ManyToManyField(User, related_name='event_invitations', blank=True)
 
     # Default fields. Omit with the --no-defaults flag
     created_at = models.DateTimeField(auto_now_add=True, editable=False)
@@ -38,7 +34,11 @@ class Event(models.Model):
 
     class Meta:
         verbose_name = 'Event'
-        verbose_name_plural = 'Agenda'
+        verbose_name_plural = 'Calendar'
+
+    @property
+    def total_participants(self):
+        return self.participants.count()
 
     # TODO: Clean this code
     def check_overlap(self, fixed_start, fixed_end, new_start, new_end):
@@ -65,7 +65,7 @@ class Event(models.Model):
         if events.exists():
             for event in events:
                 if self.check_overlap(event.start_time, event.end_time, self.start_time, self.end_time):
-                    raise ValidationError(
+                    yield ValidationError(
                         'There is an overlap with another event: ' + str(event.day) + ', ' + str(
                             event.start_time) + '-' + str(event.end_time))
 
