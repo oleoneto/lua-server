@@ -6,9 +6,9 @@ from ..serializers.comment import CommentSerializer
 
 class UserSerializer(serializers.ModelSerializer):
 
-    posts = PostSerializer(many=True)
+    posts = PostSerializer(many=True, allow_null=True)
 
-    comments = CommentSerializer(many=True)
+    comments = CommentSerializer(many=True, allow_null=True)
 
     included_serializers = {
         'posts': PostSerializer,
