@@ -3,7 +3,23 @@ from django.core.exceptions import ValidationError
 from django.urls import reverse
 from ckeditor.fields import RichTextField
 from .helpers.identifier import make_identifier
+from .helpers.mailer import send_mail
 from .user import User
+
+
+DEFAULT_INVITATION_SUBJECT = """Lua: An invite from {}"""
+
+DEFAULT_INVITATION = """
+Hello {},
+
+{} would like to share the following event with you:
+
+Title: {} 
+on {} at {} - {}
+
+Sincerely,
+Admin Team @ Lua LMS
+"""
 
 
 class Event(models.Model):
@@ -35,43 +51,67 @@ class Event(models.Model):
     class Meta:
         verbose_name = 'Event'
         verbose_name_plural = 'Calendar'
+        ordering = ['day', 'start_time', 'title']
 
     @property
     def total_participants(self):
         return self.participants.count()
 
-    # TODO: Clean this code
-    def check_overlap(self, fixed_start, fixed_end, new_start, new_end):
-        overlap = False
+    def notify_new_participant(self, participant=None):
+        try:
+            send_mail(user=participant, subject=DEFAULT_INVITATION_SUBJECT.format(self.owner.name),
+                      message=DEFAULT_INVITATION.format(participant.name, self.owner.name,
+                                                        self.title, self.day,
+                                                        self.start_time, self.end_time))
 
-        if new_start == fixed_end or new_end == fixed_start:
-            overlap = False
-        elif (new_start >= fixed_start and new_start <= fixed_end) or (new_end >= fixed_start and new_end <= fixed_end):
-            overlap = True
-        elif new_start <= fixed_start and new_end >= fixed_end:
-            overlap = True
+            print(f'Email sent to {participant.name} - {participant.email}')
+        except NameError:
+            return
 
-        return overlap
+    def overlaps(self, query_instance):
+        """
+        Current event: self
+        Queryset event: Q
+        """
+        # Takes place within another event timeline
+        # Starts in the past (before q.start) but overlaps at the end
+        # Starts in the future (after q.start) but overlaps at the end
+        # Starts in the future (after q.start) but stays inside event
+        if query_instance.start_time <= self.start_time <= query_instance.end_time or \
+                query_instance.start_time <= self.end_time <= query_instance.end_time or \
+                query_instance.start_time <= self.start_time >= query_instance.end_time:
+            return True
+
+        return False
 
     def get_absolute_url(self):
         url = reverse('admin:%s_%s_change' % (self._meta.app_label, self._meta.model_name), args=[self.id])
         return u'<a href="%s">%s</a>' % (url, str(self.start_time))
 
+    def is_same_event(self, event):
+        if (self.title == event.title) and \
+                (self.day == event.day) and \
+                (self.start_time == event.start_time):
+            return True
+        return False
+
     def clean(self):
         if self.end_time <= self.start_time:
-            raise ValidationError('Ending times must after starting times')
+            raise ValidationError('Please make sure ending times are after starting times')
 
-        events = Event.objects.filter(day=self.day)
+        events = Event.objects.filter(day=self.day).exclude(id=self.id).filter(owner=self.owner_id)
         if events.exists():
             for event in events:
-                if self.check_overlap(event.start_time, event.end_time, self.start_time, self.end_time):
-                    yield ValidationError(
-                        'There is an overlap with another event: ' + str(event.day) + ', ' + str(
-                            event.start_time) + '-' + str(event.end_time))
+                if self.is_same_event(event=event):
+                    raise ValidationError('Event already exists')
+                if self.overlaps(query_instance=event):
+                    raise ValidationError(
+                        f'There is an overlap with another event: {event.title} on {event.day}, between {event.start_time} and {event.end_time}')
 
     def save(self, *args, **kwargs):
         if not self.id:
             self.id = make_identifier()
+        self.clean()
         super().save(*args, **kwargs)
 
     def __str__(self):
