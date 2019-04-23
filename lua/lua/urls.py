@@ -28,7 +28,7 @@ urlpatterns = [
     path('', include(tf_twilio_urls)),
 
     # ...
-    path('', include('lua.core.urls')),
+    path('api/v1/', include('lua.core.urls')),
 
     path('ckeditor/', include('ckeditor_uploader.urls')),
 ]
