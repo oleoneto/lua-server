@@ -203,9 +203,9 @@ if os.getenv("EMAIL_HOST_PASSWORD", ""):
     EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
 
     EMAIL_USE_TLS = True
-    EMAIL_HOST = "smtp.lualms.com"
-    EMAIL_HOST_USER = "server"
-    EMAIL_HOST_PASSWORD = os.getenv("EMAIL_HOST_PASSWORD", "")
+    EMAIL_HOST = os.getenv('EMAIL_HOST', None)
+    EMAIL_HOST_USER = os.getenv('EMAIL_HOST_USER', None)
+    EMAIL_HOST_PASSWORD = os.getenv('EMAIL_HOST_PASSWORD', None)
     EMAIL_PORT = 587
 else:
     EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
@@ -439,10 +439,16 @@ SWAGGER_SETTINGS = {
     "LOGIN_URL": 'rest_framework:login',
     "LOGOUT_URL": 'rest_framework:logout',
     "APIS_SORTER": "alpha",
-    "DOC_EXPANSION": "list",
+    "DOC_EXPANSION": "None",
     "USE_SESSION_AUTH": True,
 
     "SHOW_REQUEST_HEADERS": True,
+    "CUSTOM_HEADERS": {
+      "Accept": "application/vnd.api+json",
+      "Content-type": "application/vnd.api+json"
+    },
+
+    "ENCODING": "application/vnd.api+json",
 
     "JSON_EDITOR": True,
     "OPERATIONS_SORTER": 'method',
