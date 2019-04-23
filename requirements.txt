@@ -60,10 +60,15 @@ django-cors-headers
 django-debug-toolbar
 
 
+# Chats
+channels
+
 # Seeding data
 Faker
 pycountry
 
+# Text analysis
+textdistance
 
 # Markdown Support
 markdown
