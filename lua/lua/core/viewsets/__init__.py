@@ -9,18 +9,18 @@ from .student import StudentViewSet
 # Agenda
 from .event import EventViewSet
 
-# Classroom
-# from .module import ModuleViewSet
-from .study_plan import StudyPlanViewSet
-
 # Postings and articles
 from .post import PostViewSet
 from .lecture import LectureViewSet
 from .comment import CommentViewSet
 
+# Classroom
+# from .module import ModuleViewSet
+from .study_plan import StudyPlanViewSet
 from .gradebook import GradebookViewSet
 from .enrollment import EnrollmentViewSet
 from .course import CourseViewSet
+from .assignment import AssignmentViewSet
 
 # Routing manager for all viewsets
 router = routers.SimpleRouter(trailing_slash=False)
@@ -32,6 +32,7 @@ router.register('instructors', InstructorViewSet)
 router.register('students', StudentViewSet)
 
 
+router.register('assignments', AssignmentViewSet)
 router.register('enrollments', EnrollmentViewSet)
 router.register('gradebooks', GradebookViewSet)
 router.register('courses', CourseViewSet)

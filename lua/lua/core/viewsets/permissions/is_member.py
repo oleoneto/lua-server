@@ -20,4 +20,14 @@ class IsMemberOrNoAccess(permissions.IsAuthenticated):
 
 class IsParticipantOrNoAccess(permissions.IsAuthenticated):
     def has_object_permission(self, request, view, obj):
-        return request.user in obj.participants.filter(username=request.user) or request.user == obj.owner
+        return obj.participants.filter(username=request.user) or request.user == obj.owner
+
+
+class IsStudentOrNoAccess(permissions.IsAuthenticated):
+    def has_object_permission(self, request, view, obj):
+        return obj.course.enrollments.filter(student_id=request.user)
+
+
+# class IsInCourseNoAccess(permissions.IsAuthenticated):
+#     def has_object_permission(self, request, view, obj):
+#         return obj.course.enrollments.filter(student_id=request.user) or obj.course.
