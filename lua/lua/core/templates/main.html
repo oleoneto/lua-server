@@ -1,0 +1,68 @@
+{% load static from staticfiles %}
+
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="A learning management solution that focuses on individual student skills, needs, and interests.">
+  <meta name="author" content="Leo Neto @ Ekletik Studios">
+  <link rel="icon" href="{% static 'assets/img/lua.svg' %}">
+  <title>Lua Learning Management System {% block title %}{% endblock %}</title>
+  <!-- Normalize CSS -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/7.0.0/normalize.min.css">
+  <!-- JQuery and Popper -->
+  <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+  <!-- Bootstrap -->
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+  <!-- Fontawesome -->
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.1/css/all.css" integrity="sha384-O8whS3fhG2OnA5Kas0Y9l3cfpmYjapjI0E4theH4iuMD+pLhbf6JI0jIMfYcK3yZ" crossorigin="anonymous">
+  <!-- Animate -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css">
+  <!-- Local CSS -->
+  <link rel="stylesheet" href="{% static 'assets/css/lua.css' %}">
+</head>
+
+
+<body class="bg-dark">
+
+  {% comment %}
+    The main site navigation bar featured all the necessary
+    menu links to be imported by other pages.
+  {% endcomment %}
+  {% block navbar %}
+  <!-- navigation -->
+  <div class="navbar-dark bg-dark fixed-top {% if request.user.is_authenticated %}logged-in{% endif %}" id="navigation">
+    <nav class="container navbar navbar-expand-lg navbar-light">
+      <a href="/" class="navbar-brand">
+        <img src="{% static 'assets/img/lua.svg' %}" width="50px" height="50px" alt="Lua LMS">
+      </a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+              aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+    </nav>
+  </div>
+  {% endblock navbar %}
+
+  {% comment %}
+    These blocks will be overwritten with content from other HTML pages.
+    We can add more blocks later and then overwrite them as needed.
+  {% endcomment %}
+
+  {% block body %}{% endblock %}
+
+  {% comment %}
+    Main site footer including some links and copyright information.
+  {% endcomment %}
+  {% block footer %}{% endblock footer %}
+
+  {% comment %}
+      jQuery 3.2.1, Popper, and Bootstrap JavaScript V4 are included here.
+  {% endcomment %}
+
+  {% block js %}{% endblock %}
+</body>
+</html>
