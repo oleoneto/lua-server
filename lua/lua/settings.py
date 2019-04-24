@@ -50,6 +50,9 @@ INSTALLED_APPS = [
     # WYSIWYG Editor
     'ckeditor',
 
+    # Support for nested inline models
+    'nested_admin',
+
     # Django REST framework
     'rest_framework',
     'rest_framework.authtoken',
@@ -210,6 +213,7 @@ if os.getenv("EMAIL_HOST_PASSWORD", ""):
 else:
     EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
 
+SERVER_EMAIL = os.getenv('SERVER_EMAIL')
 
 # Password validation
 # https://docs.djangoproject.com/en/2.1/ref/settings/#auth-password-validators
@@ -500,7 +504,11 @@ ACCOUNT_ACTIVATION_DAYS = 7
 # See http://docs.djangoproject.com/en/dev/topics/logging for
 # more details on how to customize your logging configuration.
 
-ADMINS = os.environ.get('ADMINS')
+if os.environ.get("LOCAL_MACHINE") == 'True':
+    from . import secrets
+    ADMINS = secrets.ADMINS
+else:
+    ADMINS = os.environ.get('ADMINS')
 
 MANAGERS = ADMINS
 

@@ -31,6 +31,8 @@ urlpatterns = [
     path('api/v1/', include('lua.core.urls')),
 
     path('ckeditor/', include('ckeditor_uploader.urls')),
+
+    path('nested_admin/', include('nested_admin.urls')),
 ]
 
 if settings.DEBUG:

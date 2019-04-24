@@ -7,6 +7,9 @@ django-environ
 django-polymorphic
 
 
+# Admin
+django-nested-admin
+
 # Caching
 django-redis
 
