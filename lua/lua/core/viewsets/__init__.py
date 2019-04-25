@@ -39,7 +39,6 @@ router.register('courses', CourseViewSet)
 
 
 router.register('events', EventViewSet)
-router.register('calendar', EventViewSet)
 
 
 # router.register('modules', ModuleViewSet)
