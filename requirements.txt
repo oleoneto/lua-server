@@ -35,7 +35,8 @@ Pillow
 django-ckeditor
 
 
-# Authentication
+# Authentication + Permissions
+django-role-permissions
 django-registration
 django-otp
 django-two-factor-auth

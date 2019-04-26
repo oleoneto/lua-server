@@ -53,6 +53,10 @@ INSTALLED_APPS = [
     # Support for nested inline models
     'nested_admin',
 
+    # Custom permissions
+    'guardian',
+    'rolepermissions',
+
     # Django REST framework
     'rest_framework',
     'rest_framework.authtoken',
@@ -98,6 +102,12 @@ MIDDLEWARE = [
     # Twilio gateway
     'two_factor.middleware.threadlocals.ThreadLocals',
 ]
+
+AUTHENTICATION_BACKENDS = [
+    'django.contrib.auth.backends.ModelBackend',
+    'guardian.backends.ObjectPermissionBackend',
+]
+
 
 # For debugging
 INTERNAL_IPS = '127.0.0.1'
@@ -464,6 +474,12 @@ SWAGGER_SETTINGS = {
         }
     },
 }
+
+# Permissions
+
+ROLEPERMISSIONS_MODULE = 'lua.roles'
+
+GUARDIAN_RAISE_403 = True
 
 
 # Authentication
