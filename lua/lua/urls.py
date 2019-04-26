@@ -23,7 +23,6 @@ from django.conf import settings
 admin.site.__class__ = AdminSiteOTPRequired
 
 urlpatterns = [
-    path('grappelli/', include('grappelli.urls')),
     path('admin/', admin.site.urls),
     path('', include(tf_urls)),
     path('', include(tf_twilio_urls)),

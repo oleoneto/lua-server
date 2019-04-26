@@ -33,7 +33,6 @@ ALLOWED_HOSTS = ["*"] if os.environ.get("DEBUG") else [".lualms.com"]
 # Application definition
 
 INSTALLED_APPS = [
-    'grappelli',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -465,14 +464,6 @@ SWAGGER_SETTINGS = {
         }
     },
 }
-
-
-# Admin Site
-GRAPPELLI_ADMIN_TITLE = "Lua Learning Management System"
-
-GRAPPELLI_AUTOCOMPLETE_LIMIT = 7
-
-GRAPPELLI_SWITCH_USER = True
 
 
 # Authentication
