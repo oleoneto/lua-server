@@ -4,7 +4,7 @@ from rest_framework import status
 from rest_framework.decorators import action
 from ..models.event import Event
 from ..serializers.event import EventSerializer
-from .user import User
+from .user import User, UserSerializer
 from .permissions.is_member import IsParticipantOrNoAccess
 from .permissions.is_owner import IsOwnerOrNoAccess
 
@@ -70,6 +70,14 @@ class EventViewSet(viewsets.ModelViewSet):
 
             return Response(serializer.data, status=status.HTTP_200_OK)
         return Response(serializer.data, status=status.HTTP_400_BAD_REQUEST)
+
+    @action(detail=True, methods=['get'], permission_classes=[IsParticipantOrNoAccess])
+    def participants(self, request, pk=None):
+        self.serializer_class = UserSerializer
+        event = self.get_object()
+        queryset = event.participants.all()
+        serializer = UserSerializer(queryset.distinct(), many=True)
+        return Response(serializer.data)
 
     def notify_participant(self, instance, participant=None):
         instance.notify_new_participant(participant=participant)
