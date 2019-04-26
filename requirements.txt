@@ -9,6 +9,7 @@ django-polymorphic
 
 # Admin
 django-nested-admin
+django-grappelli
 
 # Caching
 django-redis
