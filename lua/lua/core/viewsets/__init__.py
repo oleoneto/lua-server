@@ -21,6 +21,7 @@ from .gradebook import GradebookViewSet
 from .enrollment import EnrollmentViewSet
 from .course import CourseViewSet
 from .assignment import AssignmentViewSet
+from .learning_objective import LearningObjectiveViewSet
 
 # Routing manager for all viewsets
 router = routers.SimpleRouter(trailing_slash=False)
@@ -43,6 +44,7 @@ router.register('events', EventViewSet)
 
 # router.register('modules', ModuleViewSet)
 router.register('study-plans', StudyPlanViewSet)
+router.register('learning-objectives', LearningObjectiveViewSet)
 
 
 router.register('posts', PostViewSet)
