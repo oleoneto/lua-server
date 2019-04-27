@@ -40,6 +40,13 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 
+    # Authentication
+    'django_registration',
+    'django_otp',
+    'django_otp.plugins.otp_static',
+    'django_otp.plugins.otp_totp',
+    'two_factor',
+
     # Cloud storage
     'storages',
     'cloudinary',
@@ -63,12 +70,6 @@ INSTALLED_APPS = [
     'rest_framework_httpsignature',
     'rest_framework_swagger',
 
-    # Authentication
-    'django_registration',
-    'django_otp',
-    'django_otp.plugins.otp_static',
-    'django_otp.plugins.otp_totp',
-    'two_factor',
 
     # Development/Debug
     # 'corsheaders',
@@ -495,7 +496,7 @@ TWO_FACTOR_SMS_GATEWAY = 'two_factor.gateways.twilio.gateway.Twilio'
 
 # LOGOUT_URL = 'two_factor:logout'
 
-# LOGIN_REDIRECT_URL = 'two_factor:profile' # optional
+LOGIN_REDIRECT_URL = 'two_factor:profile'
 
 # TWO_FACTOR_QR_FACTORY = 'qrcode.image.pil.PilImage' # for PIL/Pillow
 
