@@ -50,7 +50,6 @@ class Event(models.Model):
 
     class Meta:
         db_table = 'core_events'
-        verbose_name = 'Event'
         ordering = ['day', 'start_time', 'title']
 
     @property
