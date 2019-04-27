@@ -11,7 +11,7 @@ class Student(models.Model):
     student_id = models.CharField(max_length=30, unique=True, editable=False)
     date_of_birth = models.DateField(blank=True)
     is_active = models.BooleanField(default=True, help_text='Active or deactivate student account')
-    plans = models.ManyToManyField(StudyPlan, help_text='Individual study plans for student')
+    plans = models.ManyToManyField(StudyPlan, help_text='Individual study plans for student', blank=True)
 
     created_at = models.DateTimeField(auto_now_add=True, editable=False)
     updated_at = models.DateTimeField(auto_now=True, editable=False)
