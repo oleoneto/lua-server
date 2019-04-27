@@ -13,7 +13,7 @@ ADMINS = (
 
 You will also need to export the following variables:
 ```text
-# Use override ALLOWED_HOSTS
+# Use to override ALLOWED_HOSTS and to enable use of secrets.py file for ADMINS
 LOCAL_MACHINE=True
 
 # User account that should receive error logs in production
@@ -77,4 +77,12 @@ manage.py two_factor_status username
 Disable 2FA for a given user:
 ```
 manage.py two_factor_disable username
+```
+
+### Build and run application
+```text
+manage.py makemigrations core && \
+manage.py migrate core && \
+manage.py migrate && \
+manage.py runserver
 ```
