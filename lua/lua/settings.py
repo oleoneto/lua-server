@@ -98,16 +98,16 @@ MIDDLEWARE = [
     # 'corsheaders.middleware.CorsMiddleware',
 
     # 2-Factor Authentication
-    # 'django_otp.middleware.OTPMiddleware',
+    'django_otp.middleware.OTPMiddleware',
 
     # Twilio gateway
-    # 'two_factor.middleware.threadlocals.ThreadLocals',
+    'two_factor.middleware.threadlocals.ThreadLocals',
 ]
 
-# AUTHENTICATION_BACKENDS = [
-#     'django.contrib.auth.backends.ModelBackend',
-#     'guardian.backends.ObjectPermissionBackend',
-# ]
+AUTHENTICATION_BACKENDS = [
+    'django.contrib.auth.backends.ModelBackend',
+    'guardian.backends.ObjectPermissionBackend',
+]
 
 
 # Password validation
