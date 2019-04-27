@@ -2,7 +2,7 @@
   "scripts": {
     "dokku": {
       "postdeploy": "/code/./.notify.sh 'Lua is live'",
-      "predeploy": "/code/manage.py migrate --noinput && /code/"
+      "predeploy": "/code/manage.py migrate --noinput && /code/manage.py collectstatic --noinput"
     }
   }
 }
