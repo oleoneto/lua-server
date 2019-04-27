@@ -14,12 +14,7 @@ class CourseSerializer(serializers.ModelSerializer):
         fields = ('id',
                   'name',
                   'description',
-                  'is_available',
-                  'enrollment_limit',
-                  'terms',
-                  'students',
-                  'students_enrolled',
-                  'waitlisted',)
+                  'is_available')
 
     class JSONAPIMeta:
         included_resources = ['students']
