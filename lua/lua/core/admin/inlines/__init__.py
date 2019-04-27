@@ -4,3 +4,4 @@ from .waitlist import Waitlist
 from .gradebook import Gradebook
 from .assignment import Assignment
 from .course_offer import CourseOffer
+from .caderneta import Caderneta
