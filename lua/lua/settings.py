@@ -41,7 +41,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
 
     # Authentication
-    'django_registration',
+    # 'django_registration',
     'django_otp',
     'django_otp.plugins.otp_static',
     'django_otp.plugins.otp_totp',
@@ -488,15 +488,15 @@ GUARDIAN_RAISE_403 = True
 # 2-FA
 OTP_TOTP_ISSUER = "Lua Learning Management System"
 
+LOGOUT_URL = 'two_factor:logout'
+
 LOGIN_URL = 'two_factor:login'
+
+LOGIN_REDIRECT_URL = 'two_factor:profile'
 
 TWO_FACTOR_CALL_GATEWAY = 'two_factor.gateways.twilio.gateway.Twilio'
 
 TWO_FACTOR_SMS_GATEWAY = 'two_factor.gateways.twilio.gateway.Twilio'
-
-# LOGOUT_URL = 'two_factor:logout'
-
-LOGIN_REDIRECT_URL = 'two_factor:profile'
 
 # TWO_FACTOR_QR_FACTORY = 'qrcode.image.pil.PilImage' # for PIL/Pillow
 
