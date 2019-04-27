@@ -50,4 +50,4 @@ class CourseOffer(models.Model):
         return self.waitlists.count()
 
     def __str__(self):
-        return f'{self.course.name} {self.id}'
+        return f'{self.instructor.user.last_name}, {self.course.name} #{self.id}'
