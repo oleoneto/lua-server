@@ -1,9 +1,7 @@
 from django.contrib import admin
 from ..models.instructor import Instructor
-from .user import UserAdmin
 
 
-# @admin.register(Instructor)
-class InstructorAdmin(UserAdmin):
-    pass
-
+@admin.register(Instructor)
+class InstructorAdmin(admin.ModelAdmin):
+    list_display = ['id', 'username', 'created_at', 'updated_at', 'is_active']
