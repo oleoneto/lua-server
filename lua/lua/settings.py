@@ -516,7 +516,9 @@ if os.environ.get("LOCAL_MACHINE") == 'True':
     from . import secrets
     ADMINS = secrets.ADMINS
 else:
-    ADMINS = os.environ.get('ADMINS')
+    ADMINS = [
+        ('Lua LMS', 'bot@ekletik.com'),
+    ]
 
 MANAGERS = ADMINS
 
