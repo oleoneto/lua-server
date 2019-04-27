@@ -4,7 +4,6 @@ from django.contrib.auth.models import AbstractUser
 from .helpers.identifier import make_identifier
 from .helpers.invalid_usernames import INVALID_USERNAMES
 from rest_framework.authtoken.models import Token
-from .role import Role
 
 
 DEFAULT_EMAIL_EXTENSION = '@lualms.com'
@@ -217,14 +216,11 @@ class User(AbstractUser):
     photo = models.ImageField(upload_to='users/profiles/', blank=True)
     internal_email = models.EmailField(blank=True)
 
-    # Using role-based permissions for users
-    roles = models.ManyToManyField(Role, related_name='users')
-
     created_at = models.DateTimeField(auto_now_add=True, editable=False)
     updated_at = models.DateTimeField(auto_now=True, editable=False)
 
     class Meta:
-        db_table = 'users'
+        db_table = 'core_users'
         ordering = ['-created_at']
 
     @property
