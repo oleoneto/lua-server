@@ -1,14 +1,14 @@
 from rest_framework import serializers
 from ..models.gradebook import Gradebook
 from .course import CourseSerializer
-from .user import UserSerializer
+from .student import StudentSerializer
 
 
 class GradebookSerializer(serializers.ModelSerializer):
 
     course = CourseSerializer()
 
-    student = UserSerializer()
+    student = StudentSerializer()
 
     class Meta:
         model = Gradebook

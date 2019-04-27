@@ -16,7 +16,19 @@ class Gradebook(models.Model):
     class Meta:
         db_table = 'school_gradebooks'
         ordering = ['-created_at']
-        
+
+    @property
+    def course(self):
+        return self.course_offer.course
+
+    @property
+    def course_instructor(self):
+        return self.course_offer.instructor
+
+    @property
+    def students(self):
+        return self.course_offer.enrollments.filter(course_offer=self.course_offer)
+
     def save(self, *args, **kwargs):
         if not self.id:
             self.id = make_identifier()
