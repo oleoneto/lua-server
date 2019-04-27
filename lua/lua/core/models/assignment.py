@@ -74,7 +74,7 @@ class Assignment(models.Model):
 
     @property
     def students(self):
-        return self.course_offer.enrollments.filter(course_offer=self)
+        return self.course_offer.enrollments.filter(course_offer=self.course_offer)
 
     @property
     def total_file_submissions(self):

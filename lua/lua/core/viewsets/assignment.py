@@ -24,7 +24,7 @@ class AssignmentViewSet(viewsets.ModelViewSet):
     def list(self, request, *args, **kwargs):
         try:
             student = Student.objects.get(user=request.user)
-            queryset = self.queryset.filter(course__offer_enrollments__student=student)
+            queryset = self.queryset.filter(course_offer__enrollments__student=student)
             queryset = self.filter_queryset(queryset)
             serializer = self.get_serializer(queryset.distinct(), many=True)
             return Response(serializer.data)
@@ -37,4 +37,3 @@ class AssignmentViewSet(viewsets.ModelViewSet):
                 return Response(serializer.data)
             except Instructor.DoesNotExist:
                 return Response([])
-
