@@ -114,8 +114,6 @@ venv.bak/
 
 # mypy
 .mypy_cache/
-static
-staticfiles
 media
 mediafiles
 data.json
