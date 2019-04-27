@@ -22,35 +22,8 @@ class Term(models.Model):
     updated_at = models.DateTimeField(auto_now=True, editable=False)
 
     class Meta:
-        db_table = 'terms'
+        db_table = 'school_terms'
         ordering = ['-created_at']
-
-    @property
-    def courses_offered(self):
-        return self.courses.all()
-
-    @property
-    def total_courses_offered(self):
-        return self.courses.count()
-
-    # TODO: Fix this to account for repeated users
-    @property
-    def total_students_in_term(self):
-        courses = self.courses.distinct()
-        students = 0
-        for course in courses:
-            students += course.enrollments.distinct().count()
-        return students
-
-    @property
-    def enrollment_percentage(self):
-        enrollments = 0
-        enrollment_limits = 0
-        for course in self.courses.all():
-            enrollments += course.enrollments.count()
-            enrollment_limits += course.enrollment_limit
-
-        return enrollments / enrollment_limits * 100
 
     def __str__(self):
         return self.get_id_display()
