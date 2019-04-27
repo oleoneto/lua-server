@@ -5,7 +5,7 @@ django-environ
 
 # Models
 django-polymorphic
-
+django-recurrence
 
 # Admin
 django-nested-admin
