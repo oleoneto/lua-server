@@ -271,7 +271,7 @@ if os.getenv("EMAIL_HOST_PASSWORD", ""):
 else:
     EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
 
-SERVER_EMAIL = os.getenv('SERVER_EMAIL')
+SERVER_EMAIL = os.environ.get('SERVER_EMAIL')
 
 
 # Internationalization
