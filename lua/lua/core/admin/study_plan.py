@@ -1,26 +1,5 @@
 from django.contrib import admin
-from ..models.study_plan import StudyPlan, StudyModule, StudyModuleRequirement
-
-
-class StudyModuleRequirementInline(admin.StackedInline):
-    model = StudyModuleRequirement
-    extra = 1
-
-
-class StudyModuleInline(admin.StackedInline):
-    model = StudyModule
-    extra = 1
-
-    # def has_add_permission(self, request, obj=None):
-    #     return False
-    #
-    # def has_change_permission(self, request, obj=None):
-    #     return False
-
-
-@admin.register(StudyModule)
-class StudyModuleAdmin(admin.ModelAdmin):
-    pass
+from ..models.study_plan import StudyPlan
 
 
 class CreatedPlansInline(admin.StackedInline):
@@ -34,8 +13,6 @@ class CreatedPlansInline(admin.StackedInline):
 
 @admin.register(StudyPlan)
 class StudyPlanAdmin(admin.ModelAdmin):
-    inlines = [StudyModuleInline]
-
     readonly_fields = ['creator']
 
     list_display = ['id', 'title', 'creator', 'created_at', 'updated_at']
@@ -44,5 +21,5 @@ class StudyPlanAdmin(admin.ModelAdmin):
     def save_model(self, request, obj, form, change):
         if request.user.has_perm('create_plan'):
             if not obj.creator_id:
-                obj.creator_id = request.user.id
+                obj.creator_id = request.user.teacher_profile.id
         obj.save()

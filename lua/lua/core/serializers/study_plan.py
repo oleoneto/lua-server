@@ -1,21 +1,16 @@
 from rest_framework import serializers
-from ..models.study_plan import StudyPlan, StudyModule, StudyModuleRequirement
-
-
-class StudyModuleSerializer(serializers.ModelSerializer):
-
-    class Meta:
-        model = StudyModule
-        fields = "__all__"
+from ..models.study_plan import StudyPlan
+from ..models.learning_objective import LearningObjective
 
 
 class StudyPlanSerializer(serializers.ModelSerializer):
 
-    modules = StudyModuleSerializer(many=True)
+    # learning_objectives = LearningObjectiveModuleSerializer(many=True)
 
-    included_serializers = {
-        'modules': StudyModuleSerializer
-    }
+    # included_serializers = {
+    #     'modules': StudyModuleSerializer
+    #     'learning_objectives': LearningObjectiveModuleSerializer
+    # }
 
     class Meta:
         model = StudyPlan
