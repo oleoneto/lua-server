@@ -4,4 +4,4 @@ from ..models.enrollment import Enrollment
 
 @admin.register(Enrollment)
 class EnrollmentAdmin(admin.ModelAdmin):
-    pass
+    list_display = ['id', 'student', 'course', 'course_instructor']
