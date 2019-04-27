@@ -109,9 +109,30 @@ AUTHENTICATION_BACKENDS = [
     'guardian.backends.ObjectPermissionBackend',
 ]
 
+
+# Password validation
+# https://docs.djangoproject.com/en/2.1/ref/settings/#auth-password-validators
+
+AUTH_PASSWORD_VALIDATORS = [
+    {
+        'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
+    },
+    {
+        'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',
+    },
+    {
+        'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator',
+    },
+    {
+        'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
+    },
+]
+
+AUTH_USER_MODEL = 'core.User'
+
+
 # Authentication
 
-# 2-FA
 OTP_TOTP_ISSUER = "Lua Learning Management System"
 
 LOGIN_URL = 'two_factor:login'
@@ -127,6 +148,13 @@ TWILIO_ACCOUNT_SID = os.environ.get('TWILIO_SID')
 TWILIO_AUTH_TOKEN = os.environ.get('TWILIO_TOKEN')
 
 TWILIO_CALLER_ID = os.environ.get('TWILIO_CALLER_ID')
+
+
+# Permissions
+
+ROLEPERMISSIONS_MODULE = 'lua.roles'
+
+GUARDIAN_RAISE_403 = True
 
 
 # For debugging
@@ -245,25 +273,6 @@ else:
 
 SERVER_EMAIL = os.getenv('SERVER_EMAIL')
 
-# Password validation
-# https://docs.djangoproject.com/en/2.1/ref/settings/#auth-password-validators
-
-AUTH_PASSWORD_VALIDATORS = [
-    {
-        'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
-    },
-    {
-        'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',
-    },
-    {
-        'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator',
-    },
-    {
-        'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
-    },
-]
-
-AUTH_USER_MODEL = 'core.User'
 
 # Internationalization
 # https://docs.djangoproject.com/en/2.1/topics/i18n/
@@ -494,12 +503,6 @@ SWAGGER_SETTINGS = {
         }
     },
 }
-
-# Permissions
-
-ROLEPERMISSIONS_MODULE = 'lua.roles'
-
-GUARDIAN_RAISE_403 = True
 
 
 # Error Logging
