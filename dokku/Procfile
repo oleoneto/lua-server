@@ -1,3 +1,2 @@
 release: ./release-tasks.sh
-web: gunicorn lua.wsgi --workers 3
-notify: curl -X POST -H 'Content-type: application/json' --data '{"text": "Notify: Lua LMS" }' https://hooks.slack.com/services/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
+web: ./release-tasks.sh ; gunicorn lua.wsgi --workers 3
