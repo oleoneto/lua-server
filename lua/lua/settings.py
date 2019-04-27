@@ -42,10 +42,10 @@ INSTALLED_APPS = [
 
     # Authentication
     # 'django_registration',
-    # 'django_otp',
-    # 'django_otp.plugins.otp_static',
-    # 'django_otp.plugins.otp_totp',
-    # 'two_factor',
+    'django_otp',
+    'django_otp.plugins.otp_static',
+    'django_otp.plugins.otp_totp',
+    'two_factor',
 
     # Cloud storage
     'storages',
@@ -135,7 +135,7 @@ AUTH_USER_MODEL = 'core.User'
 
 OTP_TOTP_ISSUER = "Lua Learning Management System"
 
-# LOGIN_URL = 'two_factor:login'
+LOGIN_URL = 'two_factor:login'
 
 # LOGIN_REDIRECT_URL = 'two_factor:profile'
 
