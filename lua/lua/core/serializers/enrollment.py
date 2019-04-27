@@ -1,12 +1,12 @@
 from rest_framework import serializers
 from ..models.enrollment import Enrollment
 from .course import CourseSerializer
-from .user import UserSerializer
+from .student import StudentSerializer
 
 
 class EnrollmentSerializer(serializers.ModelSerializer):
 
-    student = UserSerializer()
+    student = StudentSerializer()
 
     course = CourseSerializer()
 
