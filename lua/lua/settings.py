@@ -488,7 +488,7 @@ GUARDIAN_RAISE_403 = True
 # 2-FA
 OTP_TOTP_ISSUER = "Lua Learning Management System"
 
-LOGOUT_URL = 'logout'
+# LOGOUT_URL = 'logout'
 
 LOGIN_URL = 'two_factor:login'
 
