@@ -42,10 +42,10 @@ INSTALLED_APPS = [
 
     # Authentication
     # 'django_registration',
-    'django_otp',
-    'django_otp.plugins.otp_static',
-    'django_otp.plugins.otp_totp',
-    'two_factor',
+    # 'django_otp',
+    # 'django_otp.plugins.otp_static',
+    # 'django_otp.plugins.otp_totp',
+    # 'two_factor',
 
     # Cloud storage
     'storages',
@@ -98,10 +98,10 @@ MIDDLEWARE = [
     # 'corsheaders.middleware.CorsMiddleware',
 
     # 2-Factor Authentication
-    'django_otp.middleware.OTPMiddleware',
+    # 'django_otp.middleware.OTPMiddleware',
 
     # Twilio gateway
-    'two_factor.middleware.threadlocals.ThreadLocals',
+    # 'two_factor.middleware.threadlocals.ThreadLocals',
 ]
 
 AUTHENTICATION_BACKENDS = [
@@ -135,9 +135,9 @@ AUTH_USER_MODEL = 'core.User'
 
 OTP_TOTP_ISSUER = "Lua Learning Management System"
 
-LOGIN_URL = 'two_factor:login'
+# LOGIN_URL = 'two_factor:login'
 
-LOGIN_REDIRECT_URL = 'two_factor:profile'
+# LOGIN_REDIRECT_URL = 'two_factor:profile'
 
 TWO_FACTOR_CALL_GATEWAY = 'two_factor.gateways.twilio.gateway.Twilio'
 
