@@ -16,3 +16,4 @@ from .gradebook import Gradebook
 from .assignment import Assignment, AssignmentType
 from .learning_objective import LearningObjective
 from .learning_level import LearningLevel
+from .course_offer import CourseOffer
