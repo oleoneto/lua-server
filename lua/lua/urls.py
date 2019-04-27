@@ -20,7 +20,7 @@ from two_factor.gateways.twilio.urls import urlpatterns as tf_twilio_urls
 from two_factor.admin import AdminSiteOTPRequired
 from django.conf import settings
 
-admin.site.__class__ = AdminSiteOTPRequired
+# admin.site.__class__ = AdminSiteOTPRequired
 
 urlpatterns = [
     path('', include(tf_urls)),
