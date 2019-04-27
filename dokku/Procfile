@@ -1,2 +1,2 @@
 release: ./.release-tasks.sh
-web: gunicorn lua.wsgi --workers 3
+web: gunicorn lua.wsgi
