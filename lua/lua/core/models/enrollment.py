@@ -70,5 +70,17 @@ class Enrollment(models.Model):
             except Waitlist.DoesNotExist:
                 return
 
+    @property
+    def course(self):
+        return self.course_offer.course
+
+    @property
+    def course_instructor(self):
+        return self.course_offer.instructor
+
+    @property
+    def students(self):
+        return self.course_offer.enrollments.filter(course_offer=self.course_offer)
+
     def __str__(self):
         return f'#{self.id}'
