@@ -66,7 +66,15 @@ class Assignment(models.Model):
 
     @property
     def course(self):
-        return self.course_offer.course.name
+        return self.course_offer.course
+
+    @property
+    def course_instructor(self):
+        return self.course_offer.instructor
+
+    @property
+    def students(self):
+        return self.course_offer.enrollments.filter(course_offer=self)
 
     @property
     def total_file_submissions(self):

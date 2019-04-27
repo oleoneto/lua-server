@@ -1,21 +1,12 @@
 from rest_framework import permissions
+from ...models.student import Student
+from ...models.instructor import Instructor
 
 
 class IsMemberOrNoAccess(permissions.IsAuthenticated):
     # TODO: Fix permission
     def has_object_permission(self, request, view, obj):
-        user = request.user
-
-        if obj.author:
-            return obj.author == user
-        if obj.owner:
-            return obj.owner == user
-        if obj.creator:
-            return obj.creator == user
-        if obj.instructor:
-            return obj.instructor == user
-
-        return False
+        return obj.members.filter(user=request.user)
 
 
 class IsParticipantOrNoAccess(permissions.IsAuthenticated):
@@ -25,9 +16,21 @@ class IsParticipantOrNoAccess(permissions.IsAuthenticated):
 
 class IsStudentOrNoAccess(permissions.IsAuthenticated):
     def has_object_permission(self, request, view, obj):
-        return obj.course.enrollments.filter(student_id=request.user)
+        try:
+            student = Student.objects.get(user=request.user)
+            return obj.students.filter(student_id=student.id)
+        except Student.DoesNotExist:
+            return False
 
 
-# class IsInCourseNoAccess(permissions.IsAuthenticated):
-#     def has_object_permission(self, request, view, obj):
-#         return obj.course.enrollments.filter(student_id=request.user) or obj.course.
+class IsInCourseNoAccess(permissions.IsAuthenticated):
+    def has_object_permission(self, request, view, obj):
+        try:
+            instructor = Instructor.objects.get(user=request.user)
+            return obj.course_instructor == instructor
+        except Instructor.DoesNotExist:
+            try:
+                student = Student.objects.get(user=request.user)
+                return obj.students.filter(student_id=student.id)
+            except Student.DoesNotExist:
+                return False

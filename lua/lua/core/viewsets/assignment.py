@@ -1,14 +1,16 @@
 from rest_framework import viewsets
 from rest_framework.response import Response
 from ..models.assignment import Assignment
+from ..models.student import Student
+from ..models.instructor import Instructor
 from ..serializers.assignment import AssignmentSerializer
-from .permissions.is_member import IsStudentOrNoAccess
+from .permissions.is_member import IsInCourseNoAccess
 
 
 class AssignmentViewSet(viewsets.ModelViewSet):
     queryset = Assignment.objects.all()
     serializer_class = AssignmentSerializer
-    permission_classes = [IsStudentOrNoAccess]
+    permission_classes = [IsInCourseNoAccess]
     filter_fields = ['id', 'name', 'description', 'files', 'due_date', 'points', 'questions']
     search_fields = ['name', 'description', 'due_date', 'points']
     filterset_fields = {
@@ -20,7 +22,19 @@ class AssignmentViewSet(viewsets.ModelViewSet):
     }
 
     def list(self, request, *args, **kwargs):
-        queryset = self.queryset.filter(course__enrollments__student_id=request.user.id)
-        queryset = self.filter_queryset(queryset)
-        serializer = self.get_serializer(queryset.distinct(), many=True)
-        return Response(serializer.data)
+        try:
+            student = Student.objects.get(user=request.user)
+            queryset = self.queryset.filter(course__offer_enrollments__student=student)
+            queryset = self.filter_queryset(queryset)
+            serializer = self.get_serializer(queryset.distinct(), many=True)
+            return Response(serializer.data)
+        except Student.DoesNotExist:
+            try:
+                instructor = Instructor.objects.get(user=request.user)
+                queryset = self.queryset.filter(course_offer__instructor=instructor)
+                queryset = self.filter_queryset(queryset)
+                serializer = self.get_serializer(queryset.distinct(), many=True)
+                return Response(serializer.data)
+            except Instructor.DoesNotExist:
+                return Response([])
+
