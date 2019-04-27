@@ -42,10 +42,10 @@ INSTALLED_APPS = [
 
     # Authentication
     # 'django_registration',
-    # 'django_otp',
-    # 'django_otp.plugins.otp_static',
-    # 'django_otp.plugins.otp_totp',
-    # 'two_factor',
+    'django_otp',
+    'django_otp.plugins.otp_static',
+    'django_otp.plugins.otp_totp',
+    'two_factor',
 
     # Cloud storage
     'storages',
