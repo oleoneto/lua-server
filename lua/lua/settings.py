@@ -109,6 +109,25 @@ AUTHENTICATION_BACKENDS = [
     'guardian.backends.ObjectPermissionBackend',
 ]
 
+# Authentication
+
+# 2-FA
+OTP_TOTP_ISSUER = "Lua Learning Management System"
+
+LOGIN_URL = 'two_factor:login'
+
+LOGIN_REDIRECT_URL = 'two_factor:profile'
+
+TWO_FACTOR_CALL_GATEWAY = 'two_factor.gateways.twilio.gateway.Twilio'
+
+TWO_FACTOR_SMS_GATEWAY = 'two_factor.gateways.twilio.gateway.Twilio'
+
+TWILIO_ACCOUNT_SID = os.environ.get('TWILIO_SID')
+
+TWILIO_AUTH_TOKEN = os.environ.get('TWILIO_TOKEN')
+
+TWILIO_CALLER_ID = os.environ.get('TWILIO_CALLER_ID')
+
 
 # For debugging
 INTERNAL_IPS = '127.0.0.1'
@@ -481,37 +500,6 @@ SWAGGER_SETTINGS = {
 ROLEPERMISSIONS_MODULE = 'lua.roles'
 
 GUARDIAN_RAISE_403 = True
-
-
-# Authentication
-
-# 2-FA
-OTP_TOTP_ISSUER = "Lua Learning Management System"
-
-# LOGOUT_URL = 'logout'
-
-LOGIN_URL = 'two_factor:login'
-
-LOGIN_REDIRECT_URL = 'two_factor:profile'
-
-TWO_FACTOR_CALL_GATEWAY = 'two_factor.gateways.twilio.gateway.Twilio'
-
-TWO_FACTOR_SMS_GATEWAY = 'two_factor.gateways.twilio.gateway.Twilio'
-
-# TWO_FACTOR_QR_FACTORY = 'qrcode.image.pil.PilImage' # for PIL/Pillow
-
-# PHONENUMBER_DEFAULT_REGION = # Default: None
-
-TWILIO_ACCOUNT_SID = os.environ.get('TWILIO_SID')
-
-TWILIO_AUTH_TOKEN = os.environ.get('TWILIO_TOKEN')
-
-TWILIO_CALLER_ID = os.environ.get('TWILIO_CALLER_ID')
-
-
-# User Account Registration
-
-ACCOUNT_ACTIVATION_DAYS = 7
 
 
 # Error Logging
