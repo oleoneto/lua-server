@@ -1,49 +1,39 @@
 from django.db import models
 from .helpers.identifier import make_identifier
-from .helpers.current_term import get_current_term
-from .term import Term
+from django.utils import timezone
 
 
 class Course(models.Model):
     id = models.BigIntegerField(primary_key=True, editable=False)
-    name = models.CharField(max_length=250)
+    name = models.CharField(max_length=250, unique=True)
     description = models.TextField(blank=True, max_length=700, help_text='What this course is about')
-    enrollment_limit = models.PositiveIntegerField(default=100, help_text='Used to limit number of students per course')
-    terms = models.ManyToManyField(Term, related_name='courses', help_text='Terms/seasons when the course is offered')
 
     created_at = models.DateTimeField(auto_now_add=True, editable=False)
     updated_at = models.DateTimeField(auto_now=True, editable=False)
 
     class Meta:
-        db_table = 'courses'
-        ordering = ['-created_at']
+        db_table = 'school_courses'
+        ordering = ['-created_at', 'name']
 
-    def system_term(self):
-        return get_current_term()
+    @property
+    def is_being_taught(self):
+        offers = self.offers.filter(course=self)
+        if offers:
+            for offer in offers:
+                if offer.end_date > timezone.now().date():
+                    return True
+        return False
 
     @property
     def is_available(self):
-        return self.enrollments.count() < self.enrollment_limit
+        # TODO: Implement is_available
+        return False
 
     @property
     def available_in(self):
-        return f'{self.terms.count()} term(s)'
-
-    @property
-    def students(self):
-        return self.enrollments.count()
-
-    @property
-    def waitlisted(self):
-        return self.waitlists.count()
-
-    @property
-    def students_enrolled(self):
-        return f'{self.students}/{self.enrollment_limit}'
-
-    @property
-    def enrollment_progress(self):
-        return int(self.enrollments.count() / self.enrollment_limit * 100)
+        # TODO: Implement available_in
+        x = self.offers.filter(course=self).count()
+        return f'{x} term(s)'
 
     def save(self, *args, **kwargs):
         if not self.id:
