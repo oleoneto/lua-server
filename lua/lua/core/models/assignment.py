@@ -4,31 +4,34 @@ from django.core.exceptions import ValidationError
 from .helpers.identifier import make_identifier
 from .helpers.assignment import assignment_filepath, assignment_submission_path, get_due_date
 from ckeditor.fields import RichTextField
-from .course import Course
+from .course_offer import CourseOffer
 
 
 class AssignmentType(models.Model):
     """
     Default assignment types.
     """
-    TEST = 1
+    HOMEWORK = 1
     QUIZ = 2
     PROJECT = 3
-    HOMEWORK = 4
+    REPORT = 4
     ESSAY = 5
-    REPORT = 6
+    TEST = 6
     ASSIGNMENT_CHOICES = (
-        (TEST, 'Test'),
+        (HOMEWORK, 'Homework'),
         (QUIZ, 'Quiz'),
         (PROJECT, 'Project'),
-        (HOMEWORK, 'Homework'),
-        (ESSAY, 'Essay'),
         (REPORT, 'Report'),
+        (ESSAY, 'Essay'),
+        (TEST, 'Test'),
     )
     id = models.PositiveIntegerField(choices=ASSIGNMENT_CHOICES, primary_key=True)
 
     created_at = models.DateTimeField(auto_now_add=True, editable=False)
     updated_at = models.DateTimeField(auto_now=True, editable=False)
+
+    class Meta:
+        db_table = 'school_assignment_types'
 
     def assignment_count(self):
         return self.assignments.count()
@@ -43,7 +46,7 @@ class AssignmentType(models.Model):
 
 class Assignment(models.Model):
     id = models.BigIntegerField(primary_key=True, editable=False)
-    course = models.ForeignKey(Course, related_name='assignments', on_delete=models.DO_NOTHING)
+    course_offer = models.ForeignKey(CourseOffer, related_name='assignments', on_delete=models.DO_NOTHING)
     name = models.CharField(max_length=250)
     description = models.TextField(blank=True)
     due_date = models.DateTimeField(default=get_due_date)
@@ -51,14 +54,19 @@ class Assignment(models.Model):
     assignment_type = models.ForeignKey(AssignmentType, related_name='assignments',
                                         default=AssignmentType.HOMEWORK, on_delete=models.DO_NOTHING)
     public = models.BooleanField(default=True)
-    access_code = models.UUIDField(default=uuid.uuid4, unique=True, help_text='Code for students searching for your course')
+    access_code = models.UUIDField(default=uuid.uuid4, unique=True,
+                                   help_text='Code for students searching for your course')
 
     created_at = models.DateTimeField(auto_now_add=True, editable=False)
     updated_at = models.DateTimeField(auto_now=True, editable=False)
 
     class Meta:
-        db_table = 'assignments'
+        db_table = 'school_assignments'
         ordering = ['-created_at']
+
+    @property
+    def course(self):
+        return self.course_offer.course.name
 
     @property
     def total_file_submissions(self):
@@ -94,7 +102,7 @@ class AssignmentFile(models.Model):
     updated_at = models.DateTimeField(auto_now=True, editable=False)
 
     class Meta:
-        db_table = 'assignment_files'
+        db_table = 'school_assignment_files'
         ordering = ['-created_at']
 
     def __str__(self):
@@ -111,7 +119,7 @@ class Question(models.Model):
     updated_at = models.DateTimeField(auto_now=True, editable=False)
 
     class Meta:
-        db_table = 'assignment_questions'
+        db_table = 'school_assignment_questions'
         ordering = ['-created_at', 'number']
         unique_together = ('assignment', 'number')
 
@@ -141,7 +149,7 @@ class Option(models.Model):
     updated_at = models.DateTimeField(auto_now=True, editable=False)
 
     class Meta:
-        db_table = 'assignment_question_options'
+        db_table = 'school_assignment_question_options'
         ordering = ['-created_at']
 
     def save(self, *args, **kwargs):
@@ -162,7 +170,7 @@ class Answer(models.Model):
     updated_at = models.DateTimeField(auto_now=True, editable=False)
 
     class Meta:
-        db_table = 'assignment_question_answers'
+        db_table = 'school_assignment_question_answers'
         ordering = ['-created_at']
 
     def save(self, *args, **kwargs):
@@ -187,7 +195,7 @@ class FileSubmission(models.Model):
     updated_at = models.DateTimeField(auto_now=True, editable=False)
 
     class Meta:
-        db_table = 'assignment_file_submissions'
+        db_table = 'school_assignment_file_submissions'
         ordering = ['-created_at']
 
     def __str__(self):
