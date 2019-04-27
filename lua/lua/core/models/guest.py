@@ -1,5 +1,4 @@
 from django.db import models
-from .helpers.identifier import make_identifier
 from .user import User
 
 
@@ -8,7 +7,7 @@ class Guest(User):
     host = models.ForeignKey(User, related_name='guests', on_delete=models.DO_NOTHING)
 
     class Meta:
-        db_table = 'user_guests'
+        db_table = 'core_guest_users'
 
     def __str__(self):
         return f'{self.username} - with {self.host.username}'

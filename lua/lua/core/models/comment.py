@@ -17,7 +17,7 @@ class Comment(models.Model):
     updated_at = models.DateTimeField(auto_now=True, editable=False)
 
     class Meta:
-        db_table = 'comments'
+        db_table = 'core_comments'
         ordering = ['-created_at']
 
     @property

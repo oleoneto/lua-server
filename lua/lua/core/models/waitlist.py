@@ -1,21 +1,21 @@
 from django.db import models
 from .helpers.identifier import make_identifier
-from .user import User
-from .course import Course
+from .student import Student
+from .course_offer import CourseOffer
 
 
 class Waitlist(models.Model):
     id = models.BigIntegerField(primary_key=True, editable=False)
-    student = models.ForeignKey(User, related_name='waitlists', on_delete=models.DO_NOTHING)
-    course = models.ForeignKey(Course, related_name='waitlists', on_delete=models.DO_NOTHING)
+    student = models.ForeignKey(Student, related_name='waitlists', on_delete=models.DO_NOTHING)
+    course_offer = models.ForeignKey(CourseOffer, related_name='waitlists', on_delete=models.DO_NOTHING)
 
     created_at = models.DateTimeField(auto_now_add=True, editable=False)
     updated_at = models.DateTimeField(auto_now=True, editable=False)
 
     class Meta:
-        db_table = 'waitlists'
+        db_table = 'school_waitlists'
         ordering = ['-created_at']
-        unique_together = ('student', 'course')
+        unique_together = ('student', 'course_offer')
 
     def clean(self):
         super().clean()

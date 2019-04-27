@@ -49,8 +49,8 @@ class Event(models.Model):
     updated_at = models.DateTimeField(auto_now=True, editable=False)
 
     class Meta:
+        db_table = 'core_events'
         verbose_name = 'Event'
-        verbose_name_plural = 'Calendar'
         ordering = ['day', 'start_time', 'title']
 
     @property
@@ -112,6 +112,11 @@ class Event(models.Model):
         if not self.id:
             self.id = make_identifier()
         self.clean()
+
+        # TODO: Fix self-invitations
+        # if self.owner in self.participants:
+        #     self.participants = self.participants.exclude(username=self.owner.username)
+
         super().save(*args, **kwargs)
 
     def __str__(self):

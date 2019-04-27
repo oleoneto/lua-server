@@ -21,7 +21,7 @@ class Role(models.Model):
     updated_at = models.DateTimeField(auto_now=True, editable=False)
 
     class Meta:
-        db_table = 'roles'
+        db_table = 'school_roles'
         ordering = ['-created_at']
 
     @property

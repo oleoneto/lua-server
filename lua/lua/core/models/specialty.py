@@ -10,7 +10,7 @@ class Specialty(models.Model):
     updated_at = models.DateTimeField(auto_now=True, editable=False)
 
     class Meta:
-        db_table = 'user_specialties'
+        db_table = 'school_teacher_specialties'
         ordering = ['-created_at']
 
     def save(self, *args, **kwargs):

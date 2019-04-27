@@ -12,7 +12,7 @@ class LearningObjective(models.Model):
     updated_at = models.DateTimeField(auto_now=True, editable=False)
 
     class Meta:
-        db_table = 'learning_objectives'
+        db_table = 'school_learning_objectives'
         ordering = ['-created_at']
 
     def save(self, *args, **kwargs):
@@ -50,7 +50,7 @@ class LearningObjectiveFile(models.Model):
     updated_at = models.DateTimeField(auto_now=True, editable=False)
 
     class Meta:
-        db_table = 'learning_objective_files'
+        db_table = 'school_learning_objective_files'
         ordering = ['-created_at']
 
     def save(self, *args, **kwargs):
@@ -87,7 +87,7 @@ class LearningLevel(models.Model):
     updated_at = models.DateTimeField(auto_now=True, editable=False)
 
     class Meta:
-        db_table = 'learning_levels'
+        db_table = 'school_learning_levels'
         ordering = ['-created_at']
 
     def __str__(self):
@@ -108,7 +108,7 @@ class LearningOutcome(models.Model):
     updated_at = models.DateTimeField(auto_now=True, editable=False)
 
     class Meta:
-        db_table = 'learning_objective_outcomes'
+        db_table = 'school_learning_objective_outcomes'
         ordering = ['-created_at']
 
     def save(self, *args, **kwargs):

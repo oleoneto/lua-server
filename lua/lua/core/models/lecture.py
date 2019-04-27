@@ -8,7 +8,7 @@ class Lecture(BasePost):
     likes = models.ManyToManyField(User, related_name='lecture_likes', blank=True)
 
     class Meta:
-        db_table = 'lectures'
+        db_table = 'school_lectures'
         ordering = ['-created_at']
 
     @property

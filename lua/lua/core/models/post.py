@@ -12,7 +12,7 @@ class Post(BasePost):
     objects = PostManager()
 
     class Meta:
-        db_table = 'posts'
+        db_table = 'core_posts'
         ordering = ['-created_at']
 
     @property
