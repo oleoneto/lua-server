@@ -1,6 +1,9 @@
 # lua-server
 Backend server for Lua LMS
 
+### Requirements
+As listed in [requirements.txt](requirements.txt)
+
 ### Secrets
 In order to run the project, create a `secrets.py` file next to `settings.py`. 
 This file should contain the following configuration:
@@ -86,3 +89,6 @@ manage.py migrate core && \
 manage.py migrate && \
 manage.py runserver
 ```
+
+
+Built by **Leo Neto** with [Django CLI](https://github.com/oleoneto/Django-CLI)
