@@ -551,3 +551,12 @@ LOGGING = {
         }
     }
 }
+
+
+import sentry_sdk
+from sentry_sdk.integrations.django import DjangoIntegration
+
+sentry_sdk.init(
+    dsn="https://8f145b746aad495f99a9a7fbbc54765e@sentry.io/1447474",
+    integrations=[DjangoIntegration()]
+)
