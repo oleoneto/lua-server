@@ -171,13 +171,13 @@ elif os.environ.get("DATABASE_URL"):
         }
     }
 
-    CACHES = {
-        "default": {
-            "BACKEND": "django_redis.cache.RedisCache",
-            "LOCATION": os.getenv("REDIS_URL", "") + "/1",
-            "OPTIONS": {"CLIENT_CLASS": "django_redis.client.DefaultClient"},
-        }
-    }
+    # CACHES = {
+    #     "default": {
+    #         "BACKEND": "django_redis.cache.RedisCache",
+    #         "LOCATION": os.getenv("REDIS_URL", "") + "/1",
+    #         "OPTIONS": {"CLIENT_CLASS": "django_redis.client.DefaultClient"},
+    #     }
+    # }
 
     SESSION_CACHE_ALIAS = "default"
     SESSION_ENGINE = "django.contrib.sessions.backends.cache"
