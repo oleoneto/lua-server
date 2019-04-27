@@ -1,2 +1,2 @@
-release: ./release-tasks.sh
-web: python manage.py collectstatic --noinput ; gunicorn lua.wsgi --workers 3
+release: ./.release-tasks.sh
+web: gunicorn lua.wsgi --workers 3
