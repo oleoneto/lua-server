@@ -35,6 +35,10 @@ class Course(models.Model):
         x = self.offers.filter(course=self).count()
         return f'{x} term(s)'
 
+    @property
+    def total_offers(self):
+        return self.offers.count()
+
     def save(self, *args, **kwargs):
         if not self.id:
             self.id = make_identifier()
