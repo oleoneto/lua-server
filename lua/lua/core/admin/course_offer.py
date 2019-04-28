@@ -6,4 +6,11 @@ from .inlines.assignment import AssignmentInline
 @admin.register(CourseOffer)
 class CourseOfferAdmin(admin.ModelAdmin):
     inlines = [AssignmentInline]
-    list_display = ['id', 'course', 'instructor', 'term', 'enrollment_limit', 'start_date']
+    list_display = ['id',
+                    'course',
+                    'instructor',
+                    'term',
+                    'total_assignments',
+                    'total_enrollments',
+                    'enrollment_limit',
+                    ]
