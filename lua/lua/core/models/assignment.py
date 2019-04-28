@@ -73,6 +73,10 @@ class Assignment(models.Model):
         return self.course_offer.instructor
 
     @property
+    def course_term(self):
+        return self.course_offer.term
+
+    @property
     def students(self):
         return self.course_offer.enrollments.filter(course_offer=self.course_offer)
 
