@@ -19,6 +19,7 @@ from two_factor.urls import urlpatterns as tf_urls
 from two_factor.gateways.twilio.urls import urlpatterns as tf_twilio_urls
 from two_factor.admin import AdminSiteOTPRequired
 from django.conf import settings
+from lua.core.views import index
 
 admin.site.__class__ = AdminSiteOTPRequired
 
@@ -26,6 +27,8 @@ urlpatterns = [
     path('', include(tf_urls)),
     path('', include(tf_twilio_urls)),
     path('admin/', admin.site.urls),
+
+    path('', index, name='index'),
 
     # ...
     path('api/v1/', include('lua.core.urls')),
