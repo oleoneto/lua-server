@@ -1,0 +1,193 @@
+{% load static from staticfiles %}
+
+{% comment %}
+    Sample index page
+{% endcomment %}
+
+{% block page-title %}{{ page }}{% endblock %}
+
+{% block body %}
+    <!doctype html>
+<html lang="en">
+
+  <head>
+    <meta charset="utf-8">
+    <title>Lua: Learning Management System</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="A corporate Bootstrap theme by Medium Rare">
+    <!-- Bootstrap 4 -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+          integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    <link href="{% static 'assets/css/loaders/loader-typing.css' %}" rel="stylesheet" type="text/css" media="all" />
+    <link href="{% static 'assets/css/theme-course.css' %}" rel="stylesheet" type="text/css" media="all" />
+    <link rel="preload" as="font" href="{% static 'assets/fonts/Inter-UI-upright.var.woff2' %}" type="font/woff2" crossorigin="anonymous">
+    <link rel="preload" as="font" href="{% static 'assets/fonts/Inter-UI.var.woff2' %}" type="font/woff2" crossorigin="anonymous">
+  </head>
+
+  <body>
+    <div class="navbar-container bg-primary-3">
+      <nav class="navbar navbar-expand-lg navbar-dark bg-primary-3" data-sticky="top">
+        <div class="container">
+          <a class="navbar-brand fade-page" href="/">
+            <img src="{% static 'assets/img/lua.svg' %}" alt="Lua LMS">
+          </a>
+
+          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-expanded="false" aria-label="Toggle navigation">
+            <svg class="icon" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M3 17C3 17.5523 3.44772 18 4 18H20C20.5523 18 21 17.5523 21 17V17C21 16.4477 20.5523 16 20 16H4C3.44772 16 3 16.4477 3 17V17ZM3 12C3 12.5523 3.44772 13 4 13H20C20.5523 13 21 12.5523 21 12V12C21 11.4477 20.5523 11 20 11H4C3.44772 11 3 11.4477 3 12V12ZM4 6C3.44772 6 3 6.44772 3 7V7C3 7.55228 3.44772 8 4 8H20C20.5523 8 21 7.55228 21 7V7C21 6.44772 20.5523 6 20 6H4Z"
+              fill="#212529" />
+            </svg>
+          </button>
+
+          <div class="collapse navbar-collapse justify-content-end">
+            <div class="py-2 py-lg-0">
+              <ul class="navbar-nav">
+                <li class="nav-item">
+                  <a href="https://github.com/oleoneto/lua-server" class="nav-link">Documentation</a>
+                </li>
+              </ul>
+            </div><a href="/api/v1/courses" class="btn btn-primary ml-lg-3">Explore the API</a>
+          </div>
+        </div>
+      </nav>
+</div>
+
+    <div class="loader">
+      <div class="loading-animation"></div>
+    </div>
+
+    <section>
+      <div class="container">
+        <div class="row justify-content-center text-center mb-5">
+          <div class="col-xl-8 col-lg-9">
+            <h2 class="display-4 mx-xl-6">Engage. Motivate. Empower. Repeat.</h2>
+            <p class="lead">
+              When students' skills differ, engage. When expectations fail, adapt.
+            </p>
+          </div>
+        </div>
+        <div class="row justify-content-between align-items-center my-6">
+          <div class="col-md-5 col-lg-6 mb-4 mb-md-0" data-aos="fade-right">
+            <div class="row justify-content-center">
+              <div class="col-xl-9 col-lg-10">
+                <div class="card card-icon-3 card-body justify-content-between shadow-3d rotate-left">
+                  <div class="icon-round mb-3 mb-md-4 icon bg-primary-3">
+                    <svg class="icon bg-primary-3" width="24px" height="24px" viewBox="0 0 24 24" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+                      <title>Mobile device</title>
+                      <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                        <rect opacity="0" x="0" y="0" width="24" height="24"></rect>
+                        <path d="M8,2.5 C7.30964406,2.5 6.75,3.05964406 6.75,3.75 L6.75,20.25 C6.75,20.9403559 7.30964406,21.5 8,21.5 L16,21.5 C16.6903559,21.5 17.25,20.9403559 17.25,20.25 L17.25,3.75 C17.25,3.05964406 16.6903559,2.5 16,2.5 L8,2.5 Z" fill="#000000" opacity="0.3"></path>
+                        <path d="M8,2.5 C7.30964406,2.5 6.75,3.05964406 6.75,3.75 L6.75,20.25 C6.75,20.9403559 7.30964406,21.5 8,21.5 L16,21.5 C16.6903559,21.5 17.25,20.9403559 17.25,20.25 L17.25,3.75 C17.25,3.05964406 16.6903559,2.5 16,2.5 L8,2.5 Z M8,1 L16,1 C17.5187831,1 18.75,2.23121694 18.75,3.75 L18.75,20.25 C18.75,21.7687831 17.5187831,23 16,23 L8,23 C6.48121694,23 5.25,21.7687831 5.25,20.25 L5.25,3.75 C5.25,2.23121694 6.48121694,1 8,1 Z M9.5,1.75 L14.5,1.75 C14.7761424,1.75 15,1.97385763 15,2.25 L15,3.25 C15,3.52614237 14.7761424,3.75 14.5,3.75 L9.5,3.75 C9.22385763,3.75 9,3.52614237 9,3.25 L9,2.25 C9,1.97385763 9.22385763,1.75 9.5,1.75 Z"
+                        fill="#000000" fill-rule="nonzero"></path>
+                      </g>
+                    </svg>
+                  </div>
+                  <span class="badge bg-primary-3 text-light">11 Projects</span>
+                  <div>
+                    <h3>Viana, P.</h3>
+                    <p class="lead">
+                      As individual as your students. As flexible as you make it.
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-6" data-aos="fade">
+            <h3 class="h1">Personal. Because, people.</h3>
+            <p class="lead">
+                Learning is about people, so we help you get personal.
+                No more testing a fish on how good of a climber it can never be,
+                assess the potential of each student and devise strategies to help them excel.
+            </p>
+            <ul class="list-unstyled mb-0">
+              <li class="d-flex py-2">
+                <div class="icon-round icon-round-xs bg-primary-3 mr-2">
+                  <svg class="icon bg-primary-3" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M18.1206 5.4111C18.5021 4.92016 19.1753 4.86046 19.6241 5.27776C20.073 5.69506 20.1276 6.43133 19.746 6.92227L10.6794 18.5889C10.2919 19.0876 9.60523 19.1401 9.15801 18.7053L4.35802 14.0386C3.91772 13.6106 3.87806 12.8732 4.26944 12.3916C4.66082 11.91 5.33503 11.8666 5.77533 12.2947L9.76023 16.1689L18.1206 5.4111Z"
+                    fill="#212529" />
+                  </svg>
+
+                </div>
+                <span>
+                  <span class="font-weight-bold">Lesson 1:</span>Intro to music theory</span>
+              </li>
+              <li class="d-flex py-2">
+                <div class="icon-round icon-round-xs bg-primary-3 mr-2">
+                  <svg class="icon bg-primary-3" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M18.1206 5.4111C18.5021 4.92016 19.1753 4.86046 19.6241 5.27776C20.073 5.69506 20.1276 6.43133 19.746 6.92227L10.6794 18.5889C10.2919 19.0876 9.60523 19.1401 9.15801 18.7053L4.35802 14.0386C3.91772 13.6106 3.87806 12.8732 4.26944 12.3916C4.66082 11.91 5.33503 11.8666 5.77533 12.2947L9.76023 16.1689L18.1206 5.4111Z"
+                    fill="#212529" />
+                  </svg>
+
+                </div>
+                <span>
+                  <span class="font-weight-bold">Lesson 2:</span>Object-Oriented Programming</span>
+              </li>
+              <li class="d-flex py-2">
+                <div class="icon-round icon-round-xs bg-primary-3 mr-2">
+                  <svg class="icon bg-primary-3" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M18.1206 5.4111C18.5021 4.92016 19.1753 4.86046 19.6241 5.27776C20.073 5.69506 20.1276 6.43133 19.746 6.92227L10.6794 18.5889C10.2919 19.0876 9.60523 19.1401 9.15801 18.7053L4.35802 14.0386C3.91772 13.6106 3.87806 12.8732 4.26944 12.3916C4.66082 11.91 5.33503 11.8666 5.77533 12.2947L9.76023 16.1689L18.1206 5.4111Z"
+                    fill="#212529" />
+                  </svg>
+
+                </div>
+                <span>
+                  <span class="font-weight-bold">Lesson 3:</span>Colorful Metaphors</span>
+              </li>
+              <li class="d-flex py-2">
+                <div class="icon-round icon-round-xs bg-primary-3 mr-2">
+                  <svg class="icon bg-primary-3" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M18.1206 5.4111C18.5021 4.92016 19.1753 4.86046 19.6241 5.27776C20.073 5.69506 20.1276 6.43133 19.746 6.92227L10.6794 18.5889C10.2919 19.0876 9.60523 19.1401 9.15801 18.7053L4.35802 14.0386C3.91772 13.6106 3.87806 12.8732 4.26944 12.3916C4.66082 11.91 5.33503 11.8666 5.77533 12.2947L9.76023 16.1689L18.1206 5.4111Z"
+                    fill="#212529" />
+                  </svg>
+
+                </div>
+                <span>
+                  <span class="font-weight-bold">Lesson 4:</span>Ici s'est Paris</span>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <footer class="pb-4 bg-primary-3 text-light" id="footer">
+      <div class="container">
+        <div class="row justify-content-center">
+          <div class="col col-md-auto text-center">
+            <small class="text-muted">
+                ©{% now 'Y' %} Lua Learning Management System. Built by <a href="https://github.com/oleoneto">Leo Neto</a>
+            </small>
+          </div>
+        </div>
+      </div>
+    </footer>
+
+    <!-- Required vendor scripts (Do not remove) -->
+    <!-- Bootstrap 4 with jQuery-->
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js" integrity="sha384-b/U6ypiBEHpOf/4+1nzFpr53nxSS+GLCkfwBdFNTxtclqqenISfwAzpKaMNFNmj4" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+
+    <!-- Optional Vendor Scripts (Remove the plugin script if current page does not use that feature) -->
+    <!-- AOS (Animate On Scroll - animates elements into view while scrolling down) -->
+    <script type="text/javascript" src="{% static 'assets/js/aos.js' %}"></script>
+    <!-- ScrollMonitor (manages events for elements scrolling in and out of view) -->
+    <script type="text/javascript" src="{% static 'assets/js/scrollMonitor.js' %}"></script>
+    <!-- Smooth scroll (animation to links in-page)-->
+    <script type="text/javascript" src="{% static 'assets/js/smooth-scroll.polyfills.js' %}"></script>
+    <!-- Typed text (animated typing effect)-->
+    <script type="text/javascript" src="{% static 'assets/js/typed.min.js' %}"></script>
+    <!-- Required theme scripts (Do not remove) -->
+    <script type="text/javascript" src="{% static 'assets/js/theme.js' %}"></script>
+    <!-- Removes page load animation when window is finished loading -->
+    <script type="text/javascript">
+      window.addEventListener("load", function () {
+        document.querySelector('body').classList.add('loaded');
+      });
+    </script>
+
+    </body>
+</html>
+
+{% endblock %}
