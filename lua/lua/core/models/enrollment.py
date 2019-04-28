@@ -1,4 +1,5 @@
 from django.db import models
+from django.core.exceptions import ValidationError
 from .helpers.identifier import make_identifier
 from .helpers.mailer import send_mail
 from .student import Student
@@ -32,6 +33,11 @@ class Enrollment(models.Model):
         db_table = 'school_enrollments'
         ordering = ['-created_at']
         unique_together = ('student', 'course_offer',)
+
+    def clean(self):
+        super().clean()
+        if self.course_instructor.user == self.student.user:
+            raise ValidationError("Cannot be both instructor and student in course")
 
     def save(self, *args, **kwargs):
         will_notify = False
