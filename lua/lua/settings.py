@@ -555,10 +555,14 @@ LOGGING = {
 }
 
 
-import sentry_sdk
-from sentry_sdk.integrations.django import DjangoIntegration
+if os.environ.get("DATABASE_URL"):
+    # Advanced error reporting in production
+    # Include settings when DOKKU environment is detected.
 
-sentry_sdk.init(
-    dsn="https://8f145b746aad495f99a9a7fbbc54765e@sentry.io/1447474",
-    integrations=[DjangoIntegration()]
-)
+    import sentry_sdk
+    from sentry_sdk.integrations.django import DjangoIntegration
+
+    sentry_sdk.init(
+        dsn="https://8f145b746aad495f99a9a7fbbc54765e@sentry.io/1447474",
+        integrations=[DjangoIntegration()]
+    )
