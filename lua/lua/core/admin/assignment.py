@@ -7,7 +7,14 @@ from .inlines.assignment import AssignmentInline, AssignmentFileInline, Question
 @admin.register(Assignment)
 class AssignmentAdmin(nested_admin.NestedModelAdmin):
     inlines = [AssignmentFileInline, QuestionInline]
-    list_display = ['name', 'course', 'public', 'total_questions', 'total_files', 'total_file_submissions']
+    list_display = ['name',
+                    'course',
+                    'course_term',
+                    'public',
+                    'total_questions',
+                    'total_files',
+                    'total_file_submissions'
+                    ]
 
 
 @admin.register(AssignmentType)
