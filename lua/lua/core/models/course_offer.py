@@ -27,13 +27,9 @@ class CourseOffer(models.Model):
 
     def clean(self):
         super().clean()
-        if self.start_date > self.end_date:
-            raise ValidationError('Start date should be before end date')
-
-        # TODO: Check if term and dates match
-
         # TODO: Check if course offer already exists
-        if CourseOffer.objects.filter(course=self.course, instructor=self.instructor, term=self.term):
+        if not self.id and CourseOffer.objects.filter(course=self.course,
+                                      instructor=self.instructor, term=self.term):
             raise ValidationError('Course is already being offered')
 
     def save(self, *args, **kwargs):
@@ -44,6 +40,14 @@ class CourseOffer(models.Model):
     @property
     def course_name(self):
         return self.course.name
+
+    @property
+    def total_assignments(self):
+        return self.assignments.count()
+
+    @property
+    def total_enrollments(self):
+        return self.enrollments.count()
 
     @property
     def waitlisted(self):
