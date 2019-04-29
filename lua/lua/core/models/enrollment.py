@@ -54,22 +54,27 @@ class Enrollment(models.Model):
                                            course_offer=self.course_offer)
             print(f"Course if full. Student {self.student.username} added to waitlist.")
             return
+
+        # TODO: Address issue saving model.
+        # Cannot raise a DataError or the app breaks. Raise a ValidationError instead.
         try:
             super().save(*args, **kwargs)
+
+            # Create Gradebook for user
+            Gradebook.objects.get_or_create(student=self.student, course_offer=self.course_offer)
+
+            # Send email notification
+            if will_notify:
+                send_mail(user=self.student.user,
+                          subject=f"Lua: Enrollment confirmation #{self.id}",
+                          message=f"""{ENROLLMENT_MESSAGE.format(self.student.name,
+                                                                 self.course_offer.course, 
+                                                                 self.course_offer.course.id,
+                                                                 self.student.gradebooks.last(), 
+                                                                 self.id)}""")
         except DataError as error:
-            raise DataError(f'Failed to save.\n Reason: {error.args[0]}')
+            raise ValidationError(f'Failed to save.\n Reason: {error.args[0]}')
 
-        # Create Gradebook for user
-        Gradebook.objects.get_or_create(student=self.student, course_offer=self.course_offer)
-
-        if will_notify:
-            send_mail(user=self.student.user,
-                      subject=f"Lua: Enrollment confirmation #{self.id}",
-                      message=f"""{ENROLLMENT_MESSAGE.format(self.student.name,
-                                                             self.course_offer.course, 
-                                                             self.course_offer.course.id,
-                                                             self.student.gradebooks.last(), 
-                                                             self.id)}""")
 
         try:
             # Attempt to remove user from waiting list if enrollment is successful
