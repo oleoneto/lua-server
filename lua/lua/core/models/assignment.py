@@ -52,7 +52,7 @@ class Assignment(models.Model):
     due_date = models.DateTimeField(default=get_due_date)
     points = models.IntegerField(default=100, help_text='Specify how many points this assignment is worth')
     assignment_type = models.ForeignKey(AssignmentType, related_name='assignments',
-                                        default=AssignmentType.HOMEWORK, on_delete=models.DO_NOTHING)
+                                        default=AssignmentType.HOMEWORK, on_delete=models.PROTECT)
     public = models.BooleanField(default=True)
     access_code = models.UUIDField(default=uuid.uuid4, unique=True,
                                    help_text='Code for students searching for your course')
@@ -107,7 +107,7 @@ class Assignment(models.Model):
 
 class AssignmentFile(models.Model):
     id = models.BigIntegerField(primary_key=True, editable=False)
-    assignment = models.ForeignKey(Assignment, related_name='files', on_delete=models.DO_NOTHING)
+    assignment = models.ForeignKey(Assignment, related_name='files', on_delete=models.CASCADE)
     file = models.FileField(upload_to=assignment_filepath, blank=True)
 
     created_at = models.DateTimeField(auto_now_add=True, editable=False)
@@ -123,7 +123,7 @@ class AssignmentFile(models.Model):
 
 class Question(models.Model):
     id = models.BigIntegerField(primary_key=True, editable=False)
-    assignment = models.ForeignKey(Assignment, related_name='questions', on_delete=models.DO_NOTHING)
+    assignment = models.ForeignKey(Assignment, related_name='questions', on_delete=models.CASCADE)
     question = RichTextField()
     number = models.PositiveIntegerField(blank=True)
 
@@ -154,7 +154,7 @@ class Question(models.Model):
 
 class Option(models.Model):
     id = models.BigIntegerField(primary_key=True, editable=False)
-    question = models.ForeignKey(Question, related_name='options', on_delete=models.DO_NOTHING)
+    question = models.ForeignKey(Question, related_name='options', on_delete=models.CASCADE)
     option = models.CharField(blank=True, max_length=250)
 
     created_at = models.DateTimeField(auto_now_add=True, editable=False)

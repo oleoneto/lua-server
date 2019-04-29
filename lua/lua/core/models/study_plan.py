@@ -8,7 +8,7 @@ class StudyPlan(models.Model):
     id = models.BigIntegerField(primary_key=True, editable=False)
 
     # Instructor responsible for the plan
-    creator = models.ForeignKey(Instructor, related_name='created_plans', on_delete=models.DO_NOTHING)
+    creator = models.ForeignKey(Instructor, related_name='created_plans', on_delete=models.PROTECT)
 
     # Short title capturing the essence of the plan
     title = models.CharField(max_length=250)

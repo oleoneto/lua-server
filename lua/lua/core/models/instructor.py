@@ -6,7 +6,7 @@ from .specialty import Specialty
 
 class Instructor(models.Model):
     id = models.BigIntegerField(primary_key=True, editable=False)
-    user = models.OneToOneField(User, related_name='teacher_profile', on_delete=models.DO_NOTHING)
+    user = models.OneToOneField(User, related_name='teacher_profile', on_delete=models.PROTECT)
     bio = models.TextField(blank=True, max_length=500)
     specialties = models.ManyToManyField(Specialty, related_name='instructors', blank=True)
     is_active = models.BooleanField(default=True, help_text='Activate or deactivate instructor account')

@@ -8,9 +8,9 @@ from .instructor import Instructor
 
 class CourseOffer(models.Model):
     id = models.BigIntegerField(primary_key=True, editable=False)
-    course = models.ForeignKey(Course, related_name='offers', on_delete=models.DO_NOTHING)
-    term = models.ForeignKey(Term, related_name='courses_offered', on_delete=models.DO_NOTHING)
-    instructor = models.ForeignKey(Instructor, related_name='courses_taught', on_delete=models.DO_NOTHING)
+    course = models.ForeignKey(Course, related_name='offers', on_delete=models.PROTECT)
+    term = models.ForeignKey(Term, related_name='courses_offered', on_delete=models.PROTECT)
+    instructor = models.ForeignKey(Instructor, related_name='courses_taught', on_delete=models.PROTECT)
 
     # Substitute fixed start and end with RecurrenceField
     start_date = models.DateField(help_text='Date when classes will begin')

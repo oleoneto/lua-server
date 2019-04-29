@@ -26,7 +26,7 @@ class Event(models.Model):
     id = models.BigIntegerField(primary_key=True, editable=False)
 
     # `author_id` should be automatically set to the current user. Check implementation in `admin/event.py`
-    owner = models.ForeignKey(User, related_name='events', on_delete=models.DO_NOTHING, editable=False)
+    owner = models.ForeignKey(User, related_name='events', on_delete=models.PROTECT, editable=False)
 
     # Short title/description of the event. i.e "Student Appreciation Day"
     title = models.CharField(max_length=144, default="Event")

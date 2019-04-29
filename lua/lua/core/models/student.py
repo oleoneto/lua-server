@@ -7,7 +7,7 @@ from .study_plan import StudyPlan
 
 class Student(models.Model):
     id = models.BigIntegerField(primary_key=True, editable=False)
-    user = models.OneToOneField(User, related_name='student_account', on_delete=models.DO_NOTHING)
+    user = models.OneToOneField(User, related_name='student_account', on_delete=models.PROTECT)
     student_id = models.CharField(max_length=30, unique=True, editable=False)
     date_of_birth = models.DateField(blank=True)
     is_active = models.BooleanField(default=True, help_text='Active or deactivate student account')

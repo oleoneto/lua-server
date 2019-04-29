@@ -25,9 +25,9 @@ Admin @ LuaLMS
 class Enrollment(models.Model):
     id = models.BigIntegerField(primary_key=True, editable=False)
     student = models.ForeignKey(Student, related_name='enrollments',
-                                on_delete=models.DO_NOTHING)
+                                on_delete=models.PROTECT)
     course_offer = models.ForeignKey(CourseOffer, related_name='enrollments',
-                                     on_delete=models.DO_NOTHING)
+                                     on_delete=models.PROTECT)
 
     created_at = models.DateTimeField(auto_now_add=True, editable=False)
     updated_at = models.DateTimeField(auto_now=True, editable=False)

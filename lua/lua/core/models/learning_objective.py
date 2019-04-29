@@ -45,7 +45,7 @@ class LearningObjective(models.Model):
 class LearningObjectiveFile(models.Model):
     id = models.BigIntegerField(primary_key=True, editable=False)
     learning_objective = models.ForeignKey(LearningObjective,
-                                           related_name='files', on_delete=models.DO_NOTHING)
+                                           related_name='files', on_delete=models.PROTECT)
 
     # If there is a file associated with the learning objective, it can be saved here
     file = models.FileField(upload_to='learning-objectives/%Y/%m/%d/', name='learning-objectives')
@@ -101,7 +101,7 @@ class LearningLevel(models.Model):
 class LearningOutcome(models.Model):
     id = models.BigIntegerField(primary_key=True, editable=False)
     learning_objective = models.ForeignKey(LearningObjective,
-                                           related_name='outcomes', on_delete=models.DO_NOTHING)
+                                           related_name='outcomes', on_delete=models.PROTECT)
     title = models.CharField(max_length=250)
     description = models.TextField()
     is_graded = models.BooleanField(default=True, help_text='Specifies if the outcome counts towards overall grade')
