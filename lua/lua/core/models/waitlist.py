@@ -1,4 +1,5 @@
 from django.db import models
+from django.core.exceptions import ValidationError
 from .helpers.identifier import make_identifier
 from .student import Student
 from .course_offer import CourseOffer
@@ -19,6 +20,8 @@ class Waitlist(models.Model):
 
     def clean(self):
         super().clean()
+        if self.student.id not in Student.objects.filter(id=self.student.id):
+            raise ValidationError('Not a valid student account.')
 
     def save(self, *args, **kwargs):
         if not self.id:
