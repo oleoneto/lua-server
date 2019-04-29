@@ -23,6 +23,7 @@ from .course import CourseViewSet
 from .assignment import AssignmentViewSet
 from .learning_objective import LearningObjectiveViewSet
 from .course_offer import CourseOfferViewSet
+from .caderneta import CadernetaViewSet
 
 # Routing manager for all viewsets
 router = routers.SimpleRouter(trailing_slash=False)
@@ -39,6 +40,7 @@ router.register('enrollments', EnrollmentViewSet)
 router.register('gradebooks', GradebookViewSet)
 router.register('courses', CourseViewSet)
 router.register('course-offers', CourseOfferViewSet)
+router.register('cadernetas', CadernetaViewSet)
 
 router.register('events', EventViewSet)
 
