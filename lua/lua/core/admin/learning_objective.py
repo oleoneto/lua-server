@@ -15,4 +15,4 @@ class LearningObjectiveFileInline(admin.StackedInline):
 @admin.register(LearningObjective)
 class LearningObjectiveAdmin(admin.ModelAdmin):
     inlines = [LearningObjectiveFileInline, LearningOutcomeInline]
-    list_display = ['id', 'title', 'total_files', 'grade_requirement', 'is_optional']
+    list_display = ['id', 'title', 'total_outcomes', 'total_files', 'grade_requirement', 'is_required']

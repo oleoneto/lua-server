@@ -6,7 +6,7 @@ class LearningObjective(models.Model):
     id = models.BigIntegerField(primary_key=True, editable=False)
     title = models.CharField(max_length=250, help_text='What should we call this learning objective?')
     description = models.TextField(help_text='Describe what this learning objective seeks to accomplish')
-    is_optional = models.BooleanField(default=False, help_text='Set this if the objective is not mandatory')
+    is_required = models.BooleanField(default=True, help_text='Determine if the objective is mandatory')
 
     created_at = models.DateTimeField(auto_now_add=True, editable=False)
     updated_at = models.DateTimeField(auto_now=True, editable=False)
@@ -33,6 +33,10 @@ class LearningObjective(models.Model):
     @property
     def total_files(self):
         return self.files.count()
+
+    @property
+    def total_outcomes(self):
+        return self.outcomes.count()
 
     def __str__(self):
         return self.title
