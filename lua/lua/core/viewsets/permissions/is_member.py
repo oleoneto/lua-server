@@ -6,7 +6,13 @@ from ...models.instructor import Instructor
 class IsMemberOrNoAccess(permissions.IsAuthenticated):
     # TODO: Fix permission
     def has_object_permission(self, request, view, obj):
-        return obj.members.filter(user=request.user)
+        try:
+            return obj.student.user == request.user
+        except AttributeError:
+            try:
+                return obj.instructor.user == request.user
+            except AttributeError:
+                return False
 
 
 class IsParticipantOrNoAccess(permissions.IsAuthenticated):
