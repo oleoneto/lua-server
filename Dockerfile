@@ -13,6 +13,7 @@ ENV LANG C.UTF-8
 COPY requirements.txt .requirements
 COPY release-tasks.sh /code/.release-tasks.sh
 COPY notify.sh /code/.notify.sh
+COPY dokku /code/dokku
 
 # Install dependencies
 RUN apt-get update \
