@@ -14,38 +14,7 @@ ADMINS = (
 )
 ```
 
-You will also need to export the following variables:
-```text
-# Use to override ALLOWED_HOSTS and to enable use of secrets.py file for ADMINS
-LOCAL_MACHINE=True
-
-# User account that should receive error logs in production
-ADMINS="(('Your Name', 'name@example.com'),)"
-
-# The project uses S3 storage. 
-# This is needed for static and media files to work
-AWS_BUCKET_NAME=''
-AWS_LOCATION=''
-AWS_STATIC_LOCATION=''
-AWS_MEDIA_LOCATION=''
-AWS_PRIVATE_MEDIA_LOCATION=''
-AWS_REGION_NAME=''
-AWS_ORIGIN=''
-AWS_ENDPOINT=''
-AWS_ENDPOINT_URL=''
-AWS_CUSTOM_DOMAIN=''
-AWS_ACCESS_KEY_ID=''
-AWS_SECRET_ACCESS_KEY=''
-
-# -----------------------
-# -----------------------
-# Optional. Used with 2FA
-# -----------------------
-TWILIO_SID=''
-TWILIO_TOKEN=''
-TWILIO_CALLER_ID=''
-```
-
+You will also need to define the environment variables found in [.env](lua/.env-example). You should set those variables inside `.env`.
 
 ### API
 In order to access the API, please provide your authentication `token`. 
@@ -91,4 +60,4 @@ manage.py runserver
 ```
 
 
-Built by **Leo Neto** with [Django CLI](https://github.com/oleoneto/Django-CLI)
+Built by **Leo Neto** with [Django CLI](https://github.com/oleoneto/django-clite)
