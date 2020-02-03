@@ -1,4 +1,4 @@
-FROM python:latest
+FROM python:slim-stretch
 ENV PYTHONUNBUFFERED 1
 RUN apt-get update
 
