@@ -23,6 +23,7 @@ RUN apt-get update \
 
 
 # Copy file structure to docker image
+COPY dokku /code
 COPY . .
 
 # Switch users
