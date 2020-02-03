@@ -10,7 +10,7 @@ ENV PYTHONUNBUFFERED 1
 ENV LANG C.UTF-8
 
 # Copy dependencies
-COPY requirements.txt .requirements
+COPY requirements.txt requirements.text
 COPY notify.sh /code/.notify.sh
 
 # Install dependencies
@@ -19,7 +19,7 @@ RUN apt-get update \
     swig libssl-dev dpkg-dev \
     && chmod +x .notify.sh \
     && pip install -U pip gunicorn \
-    && pip install -r .requirements
+    && pip install -r requirements.txt
 
 
 # Copy file structure to docker image
