@@ -1,26 +1,32 @@
-FROM python:slim-stretch
-ENV PYTHONUNBUFFERED 1
-RUN apt-get update
+# Base image
+FROM python:3.7-slim-stretch
 
-# Install some necessary dependencies.
-RUN apt-get install -y swig libssl-dev dpkg-dev netcat
-
-# Install the requirements. This is done early so the requirements
-# don't need to be reinstalled every time something unrelated changes,
-# which would otherwise happen due to the way Docker does image caching.
-RUN pip install -U pip
-ADD requirements.txt /code/
-RUN pip install -Ur /code/requirements.txt
-
-# Add the Dokku-specific files to their locations.
-ADD dokku /app/
-ADD dokku /code/
-
-# Copy the code and collect static media.
-# Using and S3 space for the files
+# Working directory
 WORKDIR /code
-COPY lua /code/
+
+# Environment variables
+ENV PYTHONDONTWRITEBYTECODE 1
+ENV PYTHONUNBUFFERED 1
+ENV LANG C.UTF-8
+
+# Copy dependencies
+COPY requirements.txt .requirements
 COPY release-tasks.sh /code/.release-tasks.sh
 COPY notify.sh /code/.notify.sh
-RUN chmod 755 /code/.release-tasks.sh
-RUN chmod 755 /code/.notify.sh
+
+# Install dependencies
+RUN apt-get update \
+    && apt-get install -y \
+    swig libssl-dev dpkg-dev \
+    && chmod +x .notify.sh \
+    && chmod +x .release-tasks.sh \
+    && pip install -U pip gunicorn \
+    && pip install -r .requirements
+
+
+# Copy file structure to docker image
+COPY . .
+
+# Switch users
+RUN groupadd -r docker && useradd --no-log-init -r -g docker docker
+USER docker
