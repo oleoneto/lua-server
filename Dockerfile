@@ -11,20 +11,16 @@ ENV LANG C.UTF-8
 
 # Copy dependencies
 COPY requirements.txt .requirements
-COPY release-tasks.sh /code/.release-tasks.sh
 COPY notify.sh /code/.notify.sh
-COPY dokku /code/dokku
 
 # Install dependencies
 RUN apt-get update \
     && apt-get install -y \
     swig libssl-dev dpkg-dev \
     && chmod +x .notify.sh \
-    && chmod +x .release-tasks.sh \
     && pip install -U pip gunicorn \
     && pip install -r .requirements
 
-COPY lua /code/
 
 # Copy file structure to docker image
 COPY . .
