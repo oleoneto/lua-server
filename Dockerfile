@@ -24,6 +24,7 @@ RUN apt-get update \
     && pip install -U pip gunicorn \
     && pip install -r .requirements
 
+COPY lua /code/
 
 # Copy file structure to docker image
 COPY . .
